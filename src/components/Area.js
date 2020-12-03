@@ -6,6 +6,14 @@ import {
   watch,
 } from "https://elektronstudio.github.io/live/src/deps/vue.js";
 
+//import { useChannel } from "https://elektronstudio.github.io/foyer2/src/lib/index.js";
+import {
+  socket,
+  createMessage,
+} from "https://elektronstudio.github.io/live/src/lib/index.js";
+
+import { useChannel } from "../lib/channel.js";
+
 const Draggable = {
   props: ["x", "y"],
   setup(props, { emit }) {
@@ -57,6 +65,8 @@ const Draggable = {
   `,
 };
 
+const channel = "hackaton";
+
 export default {
   components: { Draggable },
   setup() {
@@ -88,9 +98,21 @@ export default {
     const onDrag = ({ dragX, dragY }) => {
       x.value = dragX;
       y.value = dragY;
+
+      const outgoingMessage = createMessage({
+        type: "CHANNEL_USER_UPDATE",
+        channel,
+        value: {
+          userX: x.value,
+          userY: y.value,
+        },
+      });
+      socket.send(outgoingMessage);
     };
 
     provide("mouse", { mouseX, mouseY });
+
+    const { users } = useChannel("hackaton");
 
     return {
       svgRef,
@@ -104,6 +126,7 @@ export default {
       onDrag,
       x,
       y,
+      users,
     };
   },
   template: `
@@ -118,22 +141,28 @@ export default {
       border: 1px solid blue;
       margin-bottom: 16px;
       position: fixed;
-      top:0;
-      left:0;
-      height:100%;
-      width:100%;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
     "
     @mousemove="onMousemove"
     @touchmove="onMousemove"
   >
     <g ref="groupRef">
+      <g v-for="user in users">
+        <text :x="user.userX" :y="user.userY" fill="red">{{ user }}</text>
+      </g>
       <Draggable :x="x" :y="y" @drag="onDrag">
         <circle r="30" />
       </Draggable>
     </g>
   </svg>
-  <div style="position: fixed; top: 10px, left: 10px">
+  <div style="position: fixed; top: 10px; left: 10px">
     {{ x }} / {{ y }}
+  </div>
+  <div style="position: fixed; top: 10px; right: 10px; width: 200px; background: gray;">
+    {{ users }}
   </div>
   `,
 };

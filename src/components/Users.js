@@ -1,7 +1,7 @@
 import { ref } from "../deps/vue.js";
 import { socket, createMessage, useUser } from "../deps/live.js";
 
-import { useChannel } from "../lib/channel.js";
+import { useChannel, shorten } from "../lib/index.js";
 import Draggable from "./Draggable.js";
 import { channel } from "../../config.js";
 
@@ -35,26 +35,27 @@ export default {
       y,
       users,
       userId,
+      shorten,
     };
   },
   template: `
   <g v-for="user in users">
-    <circle :cx="user.userX" :cy="user.userY" :r="40" />
+    <circle :cx="user.userX" :cy="user.userY" :r="40" fill="white" />
     <text
       text-anchor="middle"
       alignment-baseline="central"
       :x="user.userX"
       :y="user.userY"
-      fill="white"
+      fill="black"
       style="pointer-events: none;"
-    >{{ user.userName }}</text>
+    >{{ shorten(user.userName, 7) }}</text>
     <circle
       v-if="user.userId === userId"
       :cx="user.userX"
       :cy="user.userY"
       r="45"
       fill="none"
-      stroke="black"
+      stroke="white"
       stroke-width="3"
     />
   </g>

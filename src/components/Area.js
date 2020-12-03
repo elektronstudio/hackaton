@@ -23,12 +23,24 @@ const Draggable = {
       }
     });
 
-    const transform = computed(() => `translate(${0},${0})`);
+    const transform = computed(() => `translate(${props.x},${props.y})`);
 
-    // document.addEventListener("keydown", (e) => {
-    //   if (!e.repeat) console.log(`Key "${e.key}" pressed  [event: keydown]`);
-    //   else console.log(`Key "${e.key}" repeating  [event: keydown]`);
-    // });
+    const keyOffset = 3;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        emit("drag", { dragX: props.x - keyOffset, dragY: props.y });
+      }
+      if (e.key === "ArrowRight") {
+        emit("drag", { dragX: props.x + keyOffset, dragY: props.y });
+      }
+      if (e.key === "ArrowUp") {
+        emit("drag", { dragX: props.x, dragY: props.y - keyOffset });
+      }
+      if (e.key === "ArrowDown") {
+        emit("drag", { dragX: props.x, dragY: props.y + keyOffset });
+      }
+    });
 
     return { onMousepress, transform };
   },
@@ -115,8 +127,8 @@ export default {
     @touchmove="onMousemove"
   >
     <g ref="groupRef">
-      <Draggable @drag="onDrag">
-        <circle :cx="x" :cy="y" r="30" />
+      <Draggable :x="x" :y="y" @drag="onDrag">
+        <circle r="30" />
       </Draggable>
     </g>
   </svg>

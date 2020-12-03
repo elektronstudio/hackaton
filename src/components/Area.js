@@ -1,34 +1,65 @@
-import { ref } from "https://elektronstudio.github.io/live/src/deps/vue.js";
+import {
+  ref,
+  provide,
+  inject,
+  computed,
+  watch,
+} from "https://elektronstudio.github.io/live/src/deps/vue.js";
 
-/*
 const Draggable = {
-  setup() {
-    const mousePressed = ref(false)
-    const onMousePress = () => mousePressed.value = !mousePressed.value
+  props: ["x", "y"],
+  setup(props, { emit }) {
+    const { mouseX, mouseY } = inject("mouse");
+
+    const mousePressed = ref(false);
+
+    const onMousepress = () => {
+      mousePressed.value = !mousePressed.value;
+    };
+
+    watch([() => mouseX.value, () => mouseY.value], () => {
+      if (mousePressed.value) {
+        emit("drag", { dragX: mouseX.value, dragY: mouseY.value });
+      }
+    });
+
+    const transform = computed(() => `translate(${0},${0})`);
+
+    // document.addEventListener("keydown", (e) => {
+    //   if (!e.repeat) console.log(`Key "${e.key}" pressed  [event: keydown]`);
+    //   else console.log(`Key "${e.key}" repeating  [event: keydown]`);
+    // });
+
+    return { onMousepress, transform };
   },
   template: `
   <g 
-    @mousemove="onMousemove"
-    @touchmove="onMousemove"
-    @mousedown="mousePressed = true"
-    @touchstart="mousePressed = true"
-    @mouseup="mousePressed = false"
-    @touchend="mousePressed = false"
-  >`
-}
-*/
+    :transform="transform"
+    @mousedown="onMousepress"
+    @touchstart="onMousepress"
+    @mouseup="onMousepress"
+    @touchend="onMousepress"
+  >
+    <slot />
+  </g>
+  `,
+};
 
 export default {
+  components: { Draggable },
   setup() {
-    const width = 1000;
+    const width = 10;
     const height = 1000;
     const viewBox = `${width / -2} ${height / -2} ${width} ${height}`;
 
     const svgRef = ref(null);
     const groupRef = ref(null);
 
-    const mouseX = ref(null);
-    const mouseY = ref(null);
+    const mouseX = ref(0);
+    const mouseY = ref(0);
+
+    const x = ref(0);
+    const y = ref(0);
 
     const onMousemove = (e) => {
       let point = svgRef.value.createSVGPoint();
@@ -42,6 +73,13 @@ export default {
       mouseY.value = point.y;
     };
 
+    const onDrag = ({ dragX, dragY }) => {
+      x.value = dragX;
+      y.value = dragY;
+    };
+
+    provide("mouse", { mouseX, mouseY });
+
     return {
       svgRef,
       groupRef,
@@ -51,14 +89,17 @@ export default {
       onMousemove,
       mouseX,
       mouseY,
+      onDrag,
+      x,
+      y,
     };
   },
   template: `
   <svg
     ref="svgRef"
     xmlns="http://www.w3.org/2000/svg"
-    :width="width"
-    :height="height"
+    :awidth="width"
+    :aheight="height"
     :view-box.camel="viewBox"
     style="
       display: block;
@@ -74,11 +115,13 @@ export default {
     @touchmove="onMousemove"
   >
     <g ref="groupRef">
-      <circle cx="0" cy="0" r="20" />
+      <Draggable @drag="onDrag">
+        <circle :cx="x" :cy="y" r="30" />
+      </Draggable>
     </g>
   </svg>
   <div style="position: fixed; top: 10px, left: 10px">
-    {{ mouseX }} / {{ mouseY}}
+    {{ x }} / {{ y }}
   </div>
   `,
 };

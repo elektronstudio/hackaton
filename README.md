@@ -2,4 +2,6 @@
 
 elektron.live contribution to Garage48 hackaton https://garage48.org/events/48forthefuture
 
-See also https://elektron.live
+Demo: https://elektronstudio.github.io/hackaton/
+
+Codesandbox: https://codesandbox.io/s/github/elektronstudio/hackaton

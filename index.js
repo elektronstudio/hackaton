@@ -1,9 +1,6 @@
-import {
-  createApp,
-  ref,
-} from "https://elektronstudio.github.io/live/src/deps/vue.js";
+import { createApp, ref } from "./src/deps/vue.js";
 
-import { useUser } from "https://elektronstudio.github.io/live/src/lib/index.js";
+import { useUser } from "./src/deps/live.js";
 
 import Svg from "./src/components/Svg.js";
 import Users from "./src/components/Users.js";
@@ -22,6 +19,7 @@ const App = {
   <Video :muted="muted" />
   <Svg>
     <Users />
+    <circle v-for="r in 50" :r="r * 20 + 200" :stroke="'rgba(255,255,255,' + (0.3 - r / 100) + ')'" fill="none" />
   </Svg>
   <div
     style="

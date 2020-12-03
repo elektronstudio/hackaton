@@ -19,7 +19,7 @@ export default {
       pointer-events: none;
     ">
       <video 
-        ref="videoRef" :muted="muted" controls inline autoplay
+        ref="videoRef" :muted="muted" inline autoplay
         style="width: 600px; clip-path: circle(33%);"
         @click="isMuted = !isMuted"
       />

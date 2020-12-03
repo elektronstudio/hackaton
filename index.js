@@ -22,6 +22,11 @@ const Area = {
       display: block;
       border: 1px solid red;
       margin-bottom: 16px;
+      position: fixed;
+      top:0;
+      left:0;
+      height:100%;
+      width:100%;
     "
   >
     <circle cx="0" cy="0" r="20" />
@@ -39,9 +44,9 @@ const App = {
   },
   template: `
   <Area />
-  <h2>User</h2>
+  <!--h2>User</h2>
   Your username: {{ userName }}
-  <button @click="onUserNameChange">Change</button>
+  <button @click="onUserNameChange">Change</button-->
   `,
 };
 

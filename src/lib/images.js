@@ -32,11 +32,13 @@ export const useImages = (channel) => {
   const { userId, userName } = useUser();
 
   onMounted(() => {
-    context.value = canvasEl.value.getContext("2d");
-    videoEl.value.addEventListener("loadedmetadata", ({ srcElement }) => {
-      canvasEl.value.width = imageWidth;
-      canvasEl.value.height = imageHeight;
-    });
+    if (canvasEl.value) {
+      context.value = canvasEl.value.getContext("2d");
+      videoEl.value.addEventListener("loadedmetadata", ({ srcElement }) => {
+        canvasEl.value.width = imageWidth;
+        canvasEl.value.height = imageHeight;
+      });
+    }
   });
 
   const startVideo = () => {

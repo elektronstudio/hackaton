@@ -1,7 +1,7 @@
-import { ref } from "../deps/vue.js";
+import { ref, computed, watchEffect } from "../deps/vue.js";
 import { socket, createMessage, useUser } from "../deps/live.js";
 
-import { useChannel, shorten } from "../lib/index.js";
+import { useChannel, useImages, shorten } from "../lib/index.js";
 import Draggable from "./Draggable.js";
 import { channel } from "../../config.js";
 
@@ -34,6 +34,21 @@ export default {
     };
 
     const { users } = useChannel("hackaton");
+    const { images2 } = useImages(channel);
+    const usersWithImages = computed(() =>
+      users.value.map((user) => {
+        const imageUser = images2.value.find(
+          ({ userId }) => userId === user.userId
+        );
+        if (imageUser) {
+          user.image = imageUser.value;
+        }
+        return user;
+      })
+    );
+
+    watchEffect(() => console.log(usersWithImages.value));
+
     const { userId } = useUser();
 
     return {

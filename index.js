@@ -11,16 +11,18 @@ import { useImages } from "./src/lib/index.js";
 
 import { channel } from "./config.js";
 
-const Image = {
+const Camera = {
   setup() {
     const {
       onStart,
       onStop,
-      sendImageMessage,
       images2,
       videoEl,
       canvasEl,
+      sendImageMessages,
     } = useImages(channel);
+
+    sendImageMessages();
 
     events.on("cameraon", onStart);
     events.on("cameraoff", onStop);
@@ -30,12 +32,12 @@ const Image = {
   template: `
     <pre>{{ images2 }}</pre>
     <video ref="videoEl" autoplay playsinline style="border: 1px solid red; position: fixed; top: 0; right: 0; opacity: 0; pointer-events: none;" />
-    <canvas ref="canvasEl" style="display: none;" />
+    <canvas ref="canvasEl" style="display: block" />
   `,
 };
 
 const App = {
-  components: { Background, Overlay, Svg, Users, Videos, Image },
+  components: { Background, Overlay, Svg, Users, Videos, Camera },
   template: `
   <Videos />
   <Svg>
@@ -43,7 +45,7 @@ const App = {
     <Users />
   </Svg>
   <Overlay />
-  <Image />
+  <Camera />
   `,
 };
 

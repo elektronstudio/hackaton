@@ -18,7 +18,7 @@ import {
 const imageWidth = 100;
 const imageHeight = 100;
 const imageQuality = 0.8;
-const imageUpdateFrequency = 5000;
+const imageUpdateFrequency = 1000;
 
 export const useImages = (channel) => {
   const videoEl = ref(null);
@@ -151,12 +151,13 @@ export const useImages = (channel) => {
     Object.values(images.value).sort((a, b) => a.userId > b.userId)
   );
 
-  useSetInterval(
-    sendImageMessage,
-    ref(1), // imagesLength,
-    videoStarted,
-    imageUpdateFrequency
-  );
+  const sendImageMessages = () =>
+    useSetInterval(
+      sendImageMessage,
+      ref(1), // imagesLength,
+      videoStarted,
+      imageUpdateFrequency
+    );
 
   return {
     videoEl,
@@ -169,5 +170,6 @@ export const useImages = (channel) => {
     onStart,
     onStop,
     images2,
+    sendImageMessages,
   };
 };

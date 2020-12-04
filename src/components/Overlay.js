@@ -27,7 +27,7 @@ export default {
       events.emit("cameraoff");
     };
 
-    const { onUserNameChange } = useUser();
+    const { userName } = useUser();
 
     return {
       muted,
@@ -36,7 +36,7 @@ export default {
       camera,
       onCameraon,
       onCameraoff,
-      onUserNameChange,
+      userName,
     };
   },
   template: `
@@ -50,8 +50,6 @@ export default {
       align-items: center;
     "
   >
-    <button v-if="camera" @click="onCameraoff">Stop camera</button>
-    <button v-if="!camera" @click="onCameraon">Start camera</button>
   </div>
   <div
     style="
@@ -65,7 +63,9 @@ export default {
     ">
     <IconMute v-if="muted" @click="onUnmute" />
     <IconUnmute v-if="!muted" @click="onMute" />
-    <button @click="onUserNameChange">Change my name</button>
+    <input v-model="userName" />
+    <button v-if="camera" @click="onCameraoff">Stop camera</button>
+    <button v-if="!camera" @click="onCameraon">Start camera</button>
   </div>  
   `,
 };

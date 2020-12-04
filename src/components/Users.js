@@ -82,10 +82,10 @@ export default {
       text-anchor="middle"
       alignment-baseline="central"
       :x="user.userX"
-      :y="user.userY"
-      :fill="user.image ? 'white' : 'black'"
+      :y="user.userY - 75"
+      fill="white"
       style="pointer-events: none;"
-    >{{ user && user.userName ? shorten(user.userName, 7) : '' }}</text>
+    >{{ user.userName }}</text>
     <circle
       v-if="user.userId === userId"
       :cx="user.userX"

@@ -1,7 +1,7 @@
-import { ref } from "../deps/vue.js";
+import { ref, computed, watchEffect } from "../deps/vue.js";
 import { socket, createMessage, useUser } from "../deps/live.js";
 
-import { useChannel, shorten } from "../lib/index.js";
+import { useChannel, useImages, shorten } from "../lib/index.js";
 import Draggable from "./Draggable.js";
 import { channel } from "../../config.js";
 
@@ -34,6 +34,22 @@ export default {
     };
 
     const { users } = useChannel("hackaton");
+    const { images2 } = useImages(channel);
+    const usersWithImages = computed(() =>
+      users.value.map((user) => {
+        const imageUser = images2.value.find(
+          ({ userId }) => userId === user.userId
+        );
+        if (imageUser) {
+          user.image = imageUser.value;
+        }
+        return user;
+      })
+    );
+
+    // TODO: Replace with watch
+    watchEffect(() => usersWithImages.value);
+
     const { userId } = useUser();
 
     return {
@@ -46,28 +62,45 @@ export default {
     };
   },
   template: `
-  <g v-for="user in users">
-    <circle :cx="user.userX" :cy="user.userY" :r="40" fill="white" />
+  <g v-for="(user, i) in users">
+    <defs>
+      <clipPath :id="'user' + i">
+        <circle :cx="user.userX" :cy="user.userY" :r="50" />
+      </clipPath>
+    </defs>
+    <circle :cx="user.userX" :cy="user.userY" :r="50" fill="white" />
+    <image
+      v-if="user.image"
+      :href="user.image"
+      width="100"
+      height="100"
+      :x="user.userX ? user.userX - 50 : -50"
+      :y="user.userY ? user.userY - 50 : -50"
+      :clip-path="'url(#user' + i + ')'"
+    />
     <text
       text-anchor="middle"
       alignment-baseline="central"
       :x="user.userX"
       :y="user.userY"
-      fill="black"
+      :fill="user.image ? 'white' : 'black'"
       style="pointer-events: none;"
     >{{ user && user.userName ? shorten(user.userName, 7) : '' }}</text>
     <circle
       v-if="user.userId === userId"
       :cx="user.userX"
       :cy="user.userY"
-      r="45"
+      r="50"
       fill="none"
       stroke="white"
       stroke-width="3"
     />
   </g>
   <Draggable :x="x" :y="y" @drag="onDrag">
-    <circle r="60" fill="rgba(0,0,0,0)" />
+    <circle r="70" fill="rgba(0,0,0,0)" />
   </Draggable>
+  <div style="display: fixed: top: 0, right: 0, background: gray, width: 300px">
+    ...
+  </div>
   `,
 };

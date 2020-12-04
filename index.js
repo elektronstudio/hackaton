@@ -4,12 +4,12 @@ import Background from "./src/components/Background.js";
 import Overlay from "./src/components/Overlay.js";
 import Svg from "./src/components/Svg.js";
 import Users from "./src/components/Users.js";
-import Video from "./src/components/Video.js";
+import Videos from "./src/components/Videos.js";
 
 const App = {
-  components: { Background, Overlay, Svg, Users, Video },
+  components: { Background, Overlay, Svg, Users, Videos },
   template: `
-  <Video />
+  <Videos />
   <Svg>
     <Background />
     <Users />

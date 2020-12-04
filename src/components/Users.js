@@ -69,5 +69,8 @@ export default {
   <Draggable :x="x" :y="y" @drag="onDrag">
     <circle r="60" fill="rgba(0,0,0,0)" />
   </Draggable>
+  <div style="display: fixed: top: 0, right: 0, background: gray, width: 300px">
+    ...
+  </div>
   `,
 };

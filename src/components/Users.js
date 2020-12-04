@@ -62,7 +62,15 @@ export default {
   },
   template: `
   <g v-for="user in users">
-    <circle :cx="user.userX" :cy="user.userY" :r="40" fill="white" />
+    <circle :cx="user.userX" :cy="user.userY" :r="50" fill="white" />
+    <image
+      v-if="user.image"
+      :href="user.image"
+      width="100"
+      height="100"
+      :x="user.userX - 50"
+      :y="user.userY - 50"
+    />
     <text
       text-anchor="middle"
       alignment-baseline="central"
@@ -75,14 +83,14 @@ export default {
       v-if="user.userId === userId"
       :cx="user.userX"
       :cy="user.userY"
-      r="45"
+      r="50"
       fill="none"
       stroke="white"
       stroke-width="3"
     />
   </g>
   <Draggable :x="x" :y="y" @drag="onDrag">
-    <circle r="60" fill="rgba(0,0,0,0)" />
+    <circle r="70" fill="rgba(0,0,0,0)" />
   </Draggable>
   <div style="display: fixed: top: 0, right: 0, background: gray, width: 300px">
     ...

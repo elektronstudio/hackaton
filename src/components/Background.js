@@ -13,19 +13,19 @@ export default {
     /> -->
     <line 
       v-for="a in 72"
-      :x1="pol2car(a * 5, 250).x"
-      :y1="pol2car(a * 5, 250).y"
-      :x2="pol2car(a * 5 + 100, 1000).x"
-      :y2="pol2car(a * 5 + 100, 1000).y"
-      stroke="rgba(255,255,255,0.2)"
+      :x1="pol2car(a * 5, 370).x"
+      :y1="pol2car(a * 5, 370).y"
+      :x2="pol2car(a * 5 + 100, 1500).x"
+      :y2="pol2car(a * 5 + 100, 1500).y"
+      stroke="rgba(255,255,255,0.1)"
     />
     <line 
       v-for="a in 72"
-      :x1="pol2car(a * 5, 250).x"
-      :y1="pol2car(a * 5, 250).y"
-      :x2="pol2car(a * 5 - 100, 1000).x"
-      :y2="pol2car(a * 5 - 100, 1000).y"
-      stroke="rgba(255,255,255,0.2)"
+      :x1="pol2car(a * 5, 370).x"
+      :y1="pol2car(a * 5, 370).y"
+      :x2="pol2car(a * 5 - 100, 1500).x"
+      :y2="pol2car(a * 5 - 100, 1500).y"
+      stroke="rgba(255,255,255,0.1)"
     />
   `,
 };

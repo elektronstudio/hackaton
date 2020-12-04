@@ -68,7 +68,7 @@ export default {
         <circle :cx="user.userX" :cy="user.userY" :r="50" />
       </clipPath>
     </defs>
-    <circle :cx="user.userX" :cy="user.userY" :r="50" fill="white" />
+    <circle :cx="user.userX" :cy="user.userY" :r="50" fill="white" :opacity="user.image ? 1 : 0.5" />
     <image
       v-if="user.image"
       :href="user.image"

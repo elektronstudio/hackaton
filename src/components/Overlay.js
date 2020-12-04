@@ -16,11 +16,27 @@ export default {
       events.emit("unmute");
     };
 
+    const onCameraon = () => {
+      events.emit("cameraon");
+    };
+
     const { onUserNameChange } = useUser();
 
-    return { muted, onMute, onUnmute, onUserNameChange };
+    return { muted, onMute, onUnmute, onCameraon, onUserNameChange };
   },
   template: `
+  <div
+    style="
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    "
+  >
+    <button @click="onCameraon">Start camera</button>
+  </div>
   <div
     style="
       position: fixed;

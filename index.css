@@ -23,3 +23,18 @@ button {
 button:hover {
   opacity: 1;
 }
+
+input,
+textarea {
+  background: none;
+  border: none;
+  border-bottom: 2px solid white;
+  border-radius: 2px;
+  outline: none;
+  padding: 6px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 12px;
+  line-height: 1.5em;
+  color: white;
+  text-align: center;
+}

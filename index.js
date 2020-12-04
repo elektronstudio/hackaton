@@ -23,8 +23,9 @@ const Image = {
     } = useImages(channel);
 
     events.on("cameraon", onStart);
+    events.on("cameraoff", onStop);
 
-    return { onStart, onStop, sendImageMessage, images2, videoEl, canvasEl };
+    return { images2, videoEl, canvasEl };
   },
   template: `
     <pre>{{ images2 }}</pre>
@@ -36,11 +37,11 @@ const Image = {
 const App = {
   components: { Background, Overlay, Svg, Users, Videos, Image },
   template: `
-  <!--Videos />
+  <Videos />
   <Svg>
     <Background />
     <Users />
-  </Svg-->
+  </Svg>
   <Overlay />
   <Image />
   `,

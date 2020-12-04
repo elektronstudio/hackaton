@@ -5,6 +5,7 @@ export default {
   components: { IconMute, IconUnmute },
   setup() {
     const muted = ref(true);
+    const camera = ref(false);
 
     const onMute = () => {
       muted.value = true;
@@ -17,12 +18,26 @@ export default {
     };
 
     const onCameraon = () => {
+      camera.value = true;
       events.emit("cameraon");
+    };
+
+    const onCameraoff = () => {
+      camera.value = false;
+      events.emit("cameraoff");
     };
 
     const { onUserNameChange } = useUser();
 
-    return { muted, onMute, onUnmute, onCameraon, onUserNameChange };
+    return {
+      muted,
+      onMute,
+      onUnmute,
+      camera,
+      onCameraon,
+      onCameraoff,
+      onUserNameChange,
+    };
   },
   template: `
   <div
@@ -35,7 +50,8 @@ export default {
       align-items: center;
     "
   >
-    <button @click="onCameraon">Start camera</button>
+    <button v-if="camera" @click="onCameraoff">Stop camera</button>
+    <button v-if="!camera" @click="onCameraon">Start camera</button>
   </div>
   <div
     style="

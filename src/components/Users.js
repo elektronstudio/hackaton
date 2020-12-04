@@ -47,7 +47,8 @@ export default {
       })
     );
 
-    watchEffect(() => console.log(usersWithImages.value));
+    // TODO: Replace with watch
+    watchEffect(() => usersWithImages.value);
 
     const { userId } = useUser();
 
@@ -61,22 +62,28 @@ export default {
     };
   },
   template: `
-  <g v-for="user in users">
+  <g v-for="(user, i) in users">
+    <defs>
+      <clipPath :id="'user' + i">
+        <circle :cx="user.userX" :cy="user.userY" :r="50" />
+      </clipPath>
+    </defs>
     <circle :cx="user.userX" :cy="user.userY" :r="50" fill="white" />
     <image
       v-if="user.image"
       :href="user.image"
       width="100"
       height="100"
-      :x="user.userX - 50"
-      :y="user.userY - 50"
+      :x="user.userX ? user.userX - 50 : -50"
+      :y="user.userY ? user.userY - 50 : -50"
+      :clip-path="'url(#user' + i + ')'"
     />
     <text
       text-anchor="middle"
       alignment-baseline="central"
       :x="user.userX"
       :y="user.userY"
-      fill="black"
+      :fill="user.image ? 'white' : 'black'"
       style="pointer-events: none;"
     >{{ user && user.userName ? shorten(user.userName, 7) : '' }}</text>
     <circle

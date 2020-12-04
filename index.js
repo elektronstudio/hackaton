@@ -31,7 +31,7 @@ const Camera = {
   },
   template: `
     <video ref="videoEl" autoplay playsinline style="border: 1px solid red; position: fixed; top: 0; right: 0; opacity: 0; pointer-events: none;" />
-    <canvas ref="canvasEl" style="display: block" />
+    <canvas ref="canvasEl" style="display: none" />
   `,
 };
 

@@ -156,7 +156,7 @@ export const useImages = (channel) => {
   const sendImageMessages = () =>
     useSetInterval(
       sendImageMessage,
-      ref(1), // imagesLength,
+      imagesLength,
       videoStarted,
       imageUpdateFrequency
     );

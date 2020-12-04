@@ -48,7 +48,7 @@ export default {
       :y="user.userY"
       fill="black"
       style="pointer-events: none;"
-    >{{ shorten(user.userName, 7) }}</text>
+    >{{ user && user.userName ? shorten(user.userName, 7) : '' }}</text>
     <circle
       v-if="user.userId === userId"
       :cx="user.userX"

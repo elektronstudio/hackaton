@@ -17,7 +17,7 @@ export default {
       :y1="pol2car(a * 5, 370).y"
       :x2="pol2car(a * 5 + 100, 1500).x"
       :y2="pol2car(a * 5 + 100, 1500).y"
-      stroke="rgba(255,255,255,0.1)"
+      stroke="rgba(255,255,255,0.2)"
     />
     <line 
       v-for="a in 72"
@@ -25,7 +25,7 @@ export default {
       :y1="pol2car(a * 5, 370).y"
       :x2="pol2car(a * 5 - 100, 1500).x"
       :y2="pol2car(a * 5 - 100, 1500).y"
-      stroke="rgba(255,255,255,0.1)"
+      stroke="rgba(255,255,255,0.2)"
     />
   `,
 };

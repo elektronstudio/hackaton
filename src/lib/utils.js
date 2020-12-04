@@ -1,11 +1,18 @@
 export const shorten = (str, length = 50, suffix = "...") =>
   `${str.slice(0, length)}${str.length - 1 > length ? suffix : ""}`;
 
-export const circlexy = (angle = 0, radius = 10) => {
-  return [
-    Math.cos((angle - 90) * (Math.PI / 180)) * radius,
-    Math.sin((angle - 90) * (Math.PI / 180)) * radius,
-  ];
+export const pol2car = (a, r) => {
+  return {
+    x: Math.cos((a - 90) * (Math.PI / 180)) * r,
+    y: Math.sin((a - 90) * (Math.PI / 180)) * r,
+  };
+};
+
+export const car2pol = (x, y) => {
+  return {
+    a: Math.atan2(y, x) * (180 / Math.PI),
+    r: Math.sqrt(x * x + y * y),
+  };
 };
 
 export const scale = (value, start1, stop1, start2, stop2) => {

@@ -1,38 +1,20 @@
 import { createApp, ref } from "./src/deps/vue.js";
 
-import { useUser } from "./src/deps/live.js";
-
+import Background from "./src/components/Background.js";
+import Overlay from "./src/components/Overlay.js";
 import Svg from "./src/components/Svg.js";
 import Users from "./src/components/Users.js";
 import Video from "./src/components/Video.js";
 
 const App = {
-  components: { Video, Svg, Users },
-  setup() {
-    const muted = ref(true);
-    return {
-      ...useUser(),
-      muted,
-    };
-  },
+  components: { Background, Overlay, Svg, Users, Video },
   template: `
-  <Video :muted="muted" />
+  <Video />
   <Svg>
+    <Background />
     <Users />
-    <circle v-for="r in 50" :r="r * 20 + 200" :stroke="'rgba(255,255,255,' + (0.3 - r / 100) + ')'" fill="none" />
   </Svg>
-  <div
-    style="
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      left: 16px;
-      display: flex;
-      justify-content: space-between;
-    ">
-    <button @click="muted = !muted">{{ muted ? 'Unmute' : 'Mute' }}</button>
-    <button @click="onUserNameChange">Change my name</button>
-  </div>  
+  <Overlay />
   `,
 };
 

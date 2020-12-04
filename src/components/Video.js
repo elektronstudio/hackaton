@@ -1,14 +1,18 @@
 import { ref } from "../deps/vue.js";
 
-import { useHls } from "../deps/live.js";
+import { useHls, events } from "../deps/live.js";
 
 import { hlsUrl } from "../../config.js";
 
 export default {
-  props: ["muted"],
   setup() {
+    const muted = ref(true);
+
+    events.on("mute", () => (muted.value = true));
+    events.on("unmute", () => (muted.value = false));
+
     const videoRef = useHls(hlsUrl);
-    return { videoRef };
+    return { muted, videoRef };
   },
   template: `
     <div style="

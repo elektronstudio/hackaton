@@ -24,6 +24,13 @@ export default {
         },
       });
       socket.send(outgoingMessage);
+
+      const outgoingMessage2 = createMessage({
+        type: "ANYTHING",
+        channel,
+        value: `${x.value} ${y.value}`,
+      });
+      socket.send(outgoingMessage2);
     };
 
     const { users } = useChannel("hackaton");

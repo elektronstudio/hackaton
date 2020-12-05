@@ -65,8 +65,11 @@ export default {
     // TODO: Replace with watch
     watchEffect(() => usersWithImages.value);
 
+    const pulling = ref(false);
+
     events.on("pull", () => {
       const d = useAnimation({ from: 0, to: 1, duration: 1000 });
+      pulling.value = true;
       watch(
         () => d.value,
         (value) => {
@@ -96,6 +99,7 @@ export default {
       users,
       userId,
       shorten,
+      pulling,
     };
   },
   template: `
@@ -105,7 +109,13 @@ export default {
         <circle :cx="user.userX" :cy="user.userY" :r="50" />
       </clipPath>
     </defs>
-    <circle :cx="user.userX" :cy="user.userY" :r="50" fill="white" :opacity="user.image ? 1 : 0.5" />
+    <line 
+      v-if="pulling && user.userId === userId"
+      :x2="user.userX"
+      :y2="user.userY"
+      stroke="rgba(255,255,255,0.5)"
+    />
+    <circle :cx="user.userX" :cy="user.userY" :r="50" fill="rgba(200,200,200,1)" :opacity="user.image ? 1 : 0.5" />
     <image
       v-if="user.image"
       :href="user.image"
@@ -132,6 +142,7 @@ export default {
       stroke="white"
       stroke-width="3"
     />
+   
   </g>
   <Draggable :x="x" :y="y" @drag="onDrag">
     <circle r="70" fill="rgba(0,0,0,0)" />

@@ -1,7 +1,12 @@
 import { ref, provide } from "../deps/vue.js";
 
 export default {
-  setup() {
+  props: {
+    mouse: {
+      default: false,
+    },
+  },
+  setup(props) {
     const width = 1000;
     const height = 1000;
     const viewBox = `${width / -2} ${height / -2} ${width} ${height}`;
@@ -13,15 +18,17 @@ export default {
     const mouseY = ref(0);
 
     const onMousemove = (e) => {
-      let point = svgRef.value.createSVGPoint();
-      point.x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
-      point.y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
-      let ctm = groupRef.value.getScreenCTM();
-      if ((ctm = ctm.inverse())) {
-        point = point.matrixTransform(ctm);
+      if (props.mouse) {
+        let point = svgRef.value.createSVGPoint();
+        point.x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        point.y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+        let ctm = groupRef.value.getScreenCTM();
+        if ((ctm = ctm.inverse())) {
+          point = point.matrixTransform(ctm);
+        }
+        mouseX.value = point.x;
+        mouseY.value = point.y;
       }
-      mouseX.value = point.x;
-      mouseY.value = point.y;
     };
 
     provide("mouse", { mouseX, mouseY });

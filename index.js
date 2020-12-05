@@ -38,9 +38,11 @@ const Camera = {
 const App = {
   components: { Background, Overlay, Svg, Users, Videos, Camera },
   template: `
-  <Videos />
   <Svg>
     <Background />
+  </Svg>
+  <Videos />
+  <Svg :mouse="true">
     <Users />
   </Svg>
   <Overlay />

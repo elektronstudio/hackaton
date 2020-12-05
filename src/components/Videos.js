@@ -20,14 +20,14 @@ export default {
         align-items: center;
         justify-content: center;
         pointer-events: none;
-        mix-blend-mode: difference;
       "
     >
       <Video
         :src="src"
         :style="{
          width: 800 - (i * 300) + 'px',
-         clipPath: 'circle(33%)'
+         clipPath: 'circle(33%)',
+         mixBlendMode: 'difference'
         }"
       />
       <!--div

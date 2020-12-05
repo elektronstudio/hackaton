@@ -56,6 +56,7 @@ const App = {
   <Videos />
   <Svg>
     <Background />
+    <circle r="110" fill="rgba(0,0,0,0.5)" />
     <Users />
   </Svg>
   <Overlay />

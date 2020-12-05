@@ -15,6 +15,14 @@ export const car2pol = (x, y) => {
   };
 };
 
-export const scale = (value, start1, stop1, start2, stop2) => {
+export const map = (value, start1, stop1, start2, stop2) => {
   return ((value - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
 };
+
+export const translate = (x = 0, y = 0) => `translate(${x} ${y})`;
+
+export const rotate = (a = 0, originX = 0, originY = 0) =>
+  `rotate(${a} ${originX} ${originY})`;
+
+export const scale = (scaleX = 1, scaleY = 1) =>
+  `scale(${a} ${scaleX} ${scaleY})`;

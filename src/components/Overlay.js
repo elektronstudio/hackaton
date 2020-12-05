@@ -36,7 +36,7 @@ export default {
       camera,
       onCameraon,
       onCameraoff,
-      userName,
+      userName
     };
   },
   template: `
@@ -45,11 +45,16 @@ export default {
       position: fixed;
       top: 16px;
       right: 16px;
+      left: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    "
-  >
+    ">
+    <IconMute v-if="muted" @click="onUnmute" />
+    <IconUnmute v-if="!muted" @click="onMute" />
+    <button v-if="camera" @click="onCameraoff">Stop camera</button>
+    <button v-if="!camera" @click="onCameraon">Start camera</button>
+
   </div>
   <div
     style="
@@ -58,14 +63,10 @@ export default {
       right: 16px;
       left: 16px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
     ">
-    <IconMute v-if="muted" @click="onUnmute" />
-    <IconUnmute v-if="!muted" @click="onMute" />
     <input v-model="userName" style="width: 300px" />
-    <button v-if="camera" @click="onCameraoff">Stop camera</button>
-    <button v-if="!camera" @click="onCameraon">Start camera</button>
   </div>  
-  `,
+  `
 };

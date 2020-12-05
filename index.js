@@ -41,7 +41,10 @@ const Audio = {
     const muted = ref(true);
 
     events.on("mute", () => (muted.value = true));
-    events.on("unmute", () => (muted.value = false));
+    events.on("unmute", () => {
+      muted.value = false;
+      audioRef.value.play();
+    });
 
     return { muted, audioRef, audioSource };
   },

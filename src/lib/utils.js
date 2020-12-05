@@ -26,3 +26,11 @@ export const rotate = (a = 0, originX = 0, originY = 0) =>
 
 export const scale = (scaleX = 1, scaleY = 1) =>
   `scale(${a} ${scaleX} ${scaleY})`;
+
+export const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
+
+export const any = (arr) => shuffle(arr)[0];
+
+export const random = (from = 0, to = 1) => from + Math.random() * (to - from);
+
+export const randomint = (from = 0, to = 1) => Math.floor(random(from, to));

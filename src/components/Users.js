@@ -145,11 +145,19 @@ export default {
       :y="user.userY ? user.userY - 50 : -50"
       :clip-path="'url(#clip' + user.userId + ')'"
     />
+    <rect 
+      :x="user.userX - (user.userName.length * 7 / 2)"
+      :y="user.userY ? user.userY - 85 : -85"
+      :width="user.userName.length * 7"
+      height="20"
+      fill="black"
+    />
     <text
       text-anchor="middle"
       alignment-baseline="central"
       :x="user.userX"
       :y="user.userY ? user.userY - 75 : -75"
+      font-size="16px"
       fill="white"
       style="pointer-events: none;"
     >{{ user.userName }}</text>

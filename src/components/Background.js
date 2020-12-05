@@ -1,35 +1,35 @@
-import { useAnimation, rotate, pol2car, hsla } from "../lib/index.js";
+import { useAnimation, rotate, pol2car } from "../lib/index.js";
 
 export default {
   setup() {
+    //const angle = useAnimation({ to: 360, duration: 5 * 60 * 1000 });
     const angle = 0;
-    const offset = useAnimation({
-      to: 50,
-      duration: 10 * 1000,
-      alternate: true,
-    });
-    return { rotate, pol2car, hsla, angle, offset };
+    return { rotate, pol2car, angle };
   },
   template: `
-    <g :transform="rotate(angle)">
-    <circle
-      v-for="r in 150"
-      :r="r * 10"
-      :stroke="hsla(r * offset / 10, 100, 50, 0.1)"
-      stroke-width="4"
+    <!-- <circle
+      v-for="r in 50"
+      :r="r * 20 + 250"
+      :stroke="'rgba(255,255,255,' + (r / 100) + ')'"
       fill="none"
-      :cx="offset"
-
-    />
-    <circle
-      v-for="r in 150"
-      :r="r * 10"
-      :stroke="hsla(r * -offset / 10, 100, 50, 0.1)"
-      stroke-width="4"
-      opacity="0.2"
-      fill="none"
-      :cx="-offset"
-    />
+    /> -->
     <g :transform="rotate(angle)">
+    <line 
+      v-for="a in 72"
+      :x1="pol2car(a * 5, 50).x"
+      :y1="pol2car(a * 5, 50).y"
+      :x2="pol2car(a * 5 + 100, 1500).x"
+      :y2="pol2car(a * 5 + 100, 1500).y"
+      stroke="rgba(255,255,255,0.2)"
+    />
+    <line 
+      v-for="a in 72"
+      :x1="pol2car(a * 5, 50).x"
+      :y1="pol2car(a * 5, 50).y"
+      :x2="pol2car(a * 5 - 100, 1500).x"
+      :y2="pol2car(a * 5 - 100, 1500).y"
+      stroke="rgba(255,255,255,0.2)"
+    />
+    </g>
   `,
 };

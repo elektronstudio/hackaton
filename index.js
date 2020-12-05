@@ -49,7 +49,7 @@ const Audio = {
     return { muted, audioRef, audioSource };
   },
   template: `
-  <audio controls style="border: 1px solid red; position: fixed; top: 0, left: 0;" :src="audioSource" autoplay :muted="muted" ref="audioRef" />
+  <audio :src="audioSource" autoplay :muted="muted" ref="audioRef" />
   `,
 };
 

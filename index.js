@@ -9,7 +9,7 @@ import Videos from "./src/components/Videos.js";
 
 import { useImages } from "./src/lib/index.js";
 
-import { channel } from "./config.js";
+import { channel, audioSource } from "./config.js";
 
 const Camera = {
   setup() {
@@ -35,8 +35,23 @@ const Camera = {
   `,
 };
 
+const Audio = {
+  setup() {
+    const audioRef = ref(null);
+    const muted = ref(true);
+
+    events.on("mute", () => (muted.value = true));
+    events.on("unmute", () => (muted.value = false));
+
+    return { muted, audioRef, audioSource };
+  },
+  template: `
+  <audio :src="audioSource" autoplay :muted="muted" ref="audioRef" />
+  `,
+};
+
 const App = {
-  components: { Background, Overlay, Svg, Users, Videos, Camera },
+  components: { Background, Overlay, Svg, Users, Videos, Camera, Audio },
   template: `
   <Videos />
   <Svg>
@@ -45,6 +60,7 @@ const App = {
   </Svg>
   <Overlay />
   <Camera />
+  <Audio />
   `,
 };
 

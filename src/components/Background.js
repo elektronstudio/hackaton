@@ -2,7 +2,8 @@ import { useAnimation, rotate, pol2car } from "../lib/index.js";
 
 export default {
   setup() {
-    const angle = useAnimation({ to: 360, duration: 10 * 60 * 1000 });
+    //const angle = useAnimation({ to: 360, duration: 5 * 60 * 1000 });
+    const angle = 0;
     return { rotate, pol2car, angle };
   },
   template: `

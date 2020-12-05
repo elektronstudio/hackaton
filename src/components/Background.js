@@ -1,38 +1,9 @@
-import { ref } from "../deps/vue.js";
-import { anime } from "../deps/anime.js";
-import { pol2car } from "../lib/index.js";
-
-const translate = (x = 0, y = 0) => `translate(${x} ${y})`;
-const rotate = (a = 0, originX = 0, originY = 0) =>
-  `rotate(${a} ${originX} ${originY})`;
-const scale = (scaleX = 1, scaleY = 1) => `scale(${a} ${scaleX} ${scaleY})`;
-
-const useAnimation = (customOptions) => {
-  const options = {
-    from: 0,
-    to: 1,
-    duration: 10,
-    easing: "linear",
-    loop: true,
-    alternate: false,
-    ...customOptions,
-  };
-  const value = ref(options.from);
-  anime({
-    targets: value,
-    value: [options.from, options.to],
-    duration: options.duration,
-    easing: options.easing,
-    direction: options.alternate ? "alternate" : null,
-    loop: options.loop,
-  });
-  return value;
-};
+import { useAnimation, rotate, pol2car } from "../lib/index.js";
 
 export default {
   setup() {
     const angle = useAnimation({ to: 360, duration: 10 * 60 * 1000 });
-    return { angle, rotate, pol2car };
+    return { rotate, pol2car, angle };
   },
   template: `
     <!-- <circle

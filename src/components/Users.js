@@ -82,7 +82,7 @@ export default {
       text-anchor="middle"
       alignment-baseline="central"
       :x="user.userX"
-      :y="user.userY - 75"
+      :y="user.userY ? user.userY - 75 : -75"
       fill="white"
       style="pointer-events: none;"
     >{{ user.userName }}</text>

@@ -25,7 +25,7 @@ export default {
       :stroke="'rgba(255,255,255,' + (r / 100) + ')'"
       fill="none"
     /> -->
-    <g :transform="rotate(angle)">
+    <!--g :transform="rotate(angle)">
     <line 
       v-for="a in 72"
       :x1="pol2car(a * 180, radius).x"
@@ -51,6 +51,6 @@ export default {
     stroke="rgba(255,255,255,0.2)"
   />
   
-    </g>
+    </g-->
   `,
 };

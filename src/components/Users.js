@@ -1,7 +1,13 @@
 import { ref, computed, watchEffect } from "../deps/vue.js";
 import { socket, createMessage, useUser } from "../deps/live.js";
 
-import { useChannel, useImages, shorten } from "../lib/index.js";
+import {
+  useChannel,
+  useImages,
+  shorten,
+  range,
+  pol2car,
+} from "../lib/index.js";
 import Draggable from "./Draggable.js";
 import { channel } from "../../config.js";
 
@@ -59,6 +65,8 @@ export default {
       users,
       userId,
       shorten,
+      range,
+      pol2car,
     };
   },
   template: `
@@ -69,6 +77,30 @@ export default {
       </clipPath>
     </defs>
     <circle :cx="user.userX" :cy="user.userY" :r="50" fill="white" :opacity="user.image ? 1 : 0.5" />
+    <line
+      v-for="a in 20"
+      v-if="user.userX && user.userY"
+      :x1="user.userX || 0"
+      :y1="user.userY || 0"
+      :x2="a * 150 - (20 * 150 / 2)"
+      :y2="-500"
+      stroke="white"
+      stroke-width="50"
+      opacity="0.05"
+      stroke-linecap="round"
+    />
+    <line
+      v-for="a in 20"
+      v-if="user.userX && user.userY"
+      :x1="user.userX || 0"
+      :y1="user.userY || 0"
+      :x2="a * 150 - (20 * 150 / 2)"
+      :y2="500"
+      stroke="white"
+      stroke-width="50"
+      opacity="0.05"
+      stroke-linecap="round"
+    />
     <image
       v-if="user.image"
       :href="user.image"

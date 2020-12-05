@@ -39,3 +39,8 @@ export const rgba = (r, g, b, a = 1) => `rgba(${r},${g},${b},${a})`;
 
 export const hsla = (h, s = 100, l = 50, a = 1) =>
   `hsla(${h},${s}%,${l}%,${a})`;
+
+export const range = (from, to, step = 1) => {
+  const length = Math.floor((to - from) / step) + 1;
+  return Array.from({ length }).map((_, i) => from + i * step);
+};

@@ -41,12 +41,15 @@ const Audio = {
     const muted = ref(true);
 
     events.on("mute", () => (muted.value = true));
-    events.on("unmute", () => (muted.value = false));
+    events.on("unmute", () => {
+      muted.value = false;
+      audioRef.value.play();
+    });
 
     return { muted, audioRef, audioSource };
   },
   template: `
-  <audio :src="audioSource" autoplay :muted="muted" ref="audioRef" />
+  <audio controls style="border: 1px solid red; position: fixed; top: 0, left: 0;" :src="audioSource" autoplay :muted="muted" ref="audioRef" />
   `,
 };
 

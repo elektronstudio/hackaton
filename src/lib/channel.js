@@ -32,7 +32,7 @@ export const useChannel = (channel) => {
     const outgoingMessage = createMessage({
       type: "CHANNEL_JOIN",
       channel: channel,
-      value: { userName: userName.value }, // TODO: Do we need it?
+      value: { userName: userName.value, userX: -100, userY: -100 }, // TODO: Do we need it?
     });
     socket.send(outgoingMessage);
   };

@@ -12,6 +12,7 @@ export default {
     const y = ref(0);
 
     const onDrag = ({ dragX, dragY }) => {
+      console.log(x.value);
       x.value = dragX;
       y.value = dragY;
 
@@ -144,13 +145,6 @@ export default {
       :x="user.userX ? user.userX - 50 : -50"
       :y="user.userY ? user.userY - 50 : -50"
       :clip-path="'url(#clip' + user.userId + ')'"
-    />
-    <rect 
-      :x="user.userX - (user.userName.length * 7 / 2)"
-      :y="user.userY ? user.userY - 85 : -85"
-      :width="user.userName.length * 7"
-      height="20"
-      fill="black"
     />
     <text
       text-anchor="middle"

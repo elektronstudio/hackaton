@@ -2,9 +2,21 @@ import { useAnimation, rotate, pol2car } from "../lib/index.js";
 
 export default {
   setup() {
-    //const angle = useAnimation({ to: 360, duration: 5 * 60 * 1000 });
-    const angle = 0;
-    return { rotate, pol2car, angle };
+    // See easings at https://animejs.com/documentation/#pennerFunctions
+    const angle = useAnimation({
+      from: 0,
+      to: 360,
+      duration: 90 * 1000,
+      easing: "linear"
+    });
+    const radius = useAnimation({
+      from: 0,
+      to: 300,
+      duration: 6 * 1000,
+      alternate: true,
+      easing: "easeOutExpo"
+    });
+    return { rotate, pol2car, angle, radius };
   },
   template: `
     <!-- <circle
@@ -16,20 +28,21 @@ export default {
     <g :transform="rotate(angle)">
     <line 
       v-for="a in 72"
-      :x1="pol2car(a * 5, 370).x"
-      :y1="pol2car(a * 5, 370).y"
+      :x1="pol2car(a * 180, radius).x"
+      :y1="pol2car(a * 180, radius).y"
       :x2="pol2car(a * 5 + 100, 1500).x"
       :y2="pol2car(a * 5 + 100, 1500).y"
-      stroke="rgba(255,255,255,0.2)"
+      stroke="rgba(255,255,255,0.3)"
     />
     <line 
       v-for="a in 72"
-      :x1="pol2car(a * 5, 370).x"
-      :y1="pol2car(a * 5, 370).y"
+      :x1="pol2car(a * 180, radius).x"
+      :y1="pol2car(a * 180, radius).y"
       :x2="pol2car(a * 5 - 100, 1500).x"
       :y2="pol2car(a * 5 - 100, 1500).y"
-      stroke="rgba(255,255,255,0.2)"
+      stroke="rgba(255,255,255,0.3)"
     />
+  
     </g>
-  `,
+  `
 };

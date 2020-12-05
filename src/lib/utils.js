@@ -39,3 +39,13 @@ export const rgba = (r, g, b, a = 1) => `rgba(${r},${g},${b},${a})`;
 
 export const hsla = (h, s = 100, l = 50, a = 1) =>
   `hsla(${h},${s}%,${l}%,${a})`;
+
+export const distance = (x1, y1, x2, y2) =>
+  Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+
+export const pointatline = (x1, y1, x2, y2, d) => {
+  const dis = distance(x1, y1, x2, y2);
+  const x3 = x1 + (d / dis) * (x2 - x1);
+  const y3 = y1 + (d / dis) * (y2 - y1);
+  return { x: x3, y: y3 };
+};

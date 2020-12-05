@@ -1,7 +1,14 @@
-import { ref, computed, watchEffect } from "../deps/vue.js";
-import { socket, createMessage, useUser } from "../deps/live.js";
+import { ref, computed, watchEffect, watch } from "../deps/vue.js";
+import { socket, createMessage, useUser, events } from "../deps/live.js";
 
-import { useChannel, useImages, shorten } from "../lib/index.js";
+import {
+  useChannel,
+  useImages,
+  shorten,
+  useAnimation,
+  pointatline,
+  distance,
+} from "../lib/index.js";
 import Draggable from "./Draggable.js";
 import { channel } from "../../config.js";
 
@@ -47,10 +54,40 @@ export default {
       })
     );
 
+    const { userId } = useUser();
+
+    const currentUser = computed(() =>
+      users.value.find((user) => {
+        return user.userId === userId.value;
+      })
+    );
+
     // TODO: Replace with watch
     watchEffect(() => usersWithImages.value);
 
-    const { userId } = useUser();
+    events.on("pull", () => {
+      const d = useAnimation({ from: 0, to: 1, duration: 1000 });
+      watch(
+        () => d.value,
+        (value) => {
+          if (currentUser.value) {
+            const { x: dragX, y: dragY } = pointatline(
+              0,
+              0,
+              currentUser.value.userX || 0,
+              currentUser.value.userY || 0,
+              distance(
+                0,
+                0,
+                currentUser.value.userX || 0,
+                currentUser.value.userY || 0
+              ) - value
+            );
+            onDrag({ dragX, dragY });
+          }
+        }
+      );
+    });
 
     return {
       onDrag,

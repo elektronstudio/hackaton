@@ -27,6 +27,10 @@ export default {
       events.emit("cameraoff");
     };
 
+    const onPull = () => {
+      events.emit("pull");
+    };
+
     const { userName } = useUser();
 
     return {
@@ -37,6 +41,7 @@ export default {
       onCameraon,
       onCameraoff,
       userName,
+      onPull,
     };
   },
   template: `
@@ -50,7 +55,9 @@ export default {
       align-items: center;
     "
   >
-  </div>
+    <div />
+    <button @click="onPull">Pull</button>
+    </div>
   <div
     style="
       position: fixed;

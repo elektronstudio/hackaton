@@ -13,19 +13,19 @@ export default {
       :stroke="'rgba(255,255,255,' + (r / 100) + ')'"
       fill="none"
     /> -->
-    <g :transform="rotate(angle)">
+    <g :transform="rotate(angle)" style="animation: spin 3000000ms infinite linear">
     <line 
       v-for="a in 72"
-      :x1="pol2car(a * 5, 370).x"
-      :y1="pol2car(a * 5, 370).y"
+      :x1="pol2car(a * 5, 350).x"
+      :y1="pol2car(a * 5, 350).y"
       :x2="pol2car(a * 5 + 100, 1500).x"
       :y2="pol2car(a * 5 + 100, 1500).y"
       stroke="rgba(255,255,255,0.2)"
     />
     <line 
       v-for="a in 72"
-      :x1="pol2car(a * 5, 370).x"
-      :y1="pol2car(a * 5, 370).y"
+      :x1="pol2car(a * 5, 350).x"
+      :y1="pol2car(a * 5, 350).y"
       :x2="pol2car(a * 5 - 100, 1500).x"
       :y2="pol2car(a * 5 - 100, 1500).y"
       stroke="rgba(255,255,255,0.2)"

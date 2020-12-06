@@ -61,9 +61,9 @@ export default {
       justify-content: space-between;
       align-items: center;
     ">
-    <IconMute v-if="muted" @click="onUnmute" transform="translate(10 0) scale(1.5)" />
-    <IconUnmute v-if="!muted" @click="onMute" />
-    <input v-model="userName" style="width: 300px" />
+    <IconMute v-if="muted" @click="onUnmute" transform="translate(15 -5) scale(1.75)" />
+    <IconUnmute v-if="!muted" @click="onMute" transform="translate(15 -5) scale(1.75)" />
+    <input v-model="userName" style="width: 300px;" />
     <button v-if="camera" @click="onCameraoff">Stop camera</button>
     <button v-if="!camera" @click="onCameraon">Start camera</button>
   </div>  

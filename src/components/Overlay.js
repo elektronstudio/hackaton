@@ -54,7 +54,6 @@ export default {
       justify-content: center;
       align-items: center;
     ">
-    <input v-model="userName" style="width: 300px;" />
   </div>  
   <div
     style="
@@ -69,10 +68,11 @@ export default {
     <div style="display: flex; align-items: center; cursor: pointer; ">
       <IconMute v-if="muted" @click="onUnmute" style="fill: var(--accent); opacity: 0.5;" transform="translate(15 0) scale(1.75)" />
       <IconUnmute v-if="!muted" @click="onMute" style="fill: var(--accent);" transform="translate(15 0) scale(1.75)" />
-    <div @click="onMute" v-show="muted" style="margin-left: 35px; opacity: 0.4; color: var(--accent)">Turn on the sound</div>
+      <!-- <div @click="onMute" v-show="muted" style="margin-left: 35px; opacity: 0.4; color: var(--accent)">Turn on the sound</div> -->
     </div>
+    <input v-model="userName" style="width: 300px;" />
     <div style="display: flex; align-items: center; cursor: pointer; ">
-    <div @click="onCameraon" v-show="!camera" style="margin-right: 35px; opacity: 0.5; color: var(--accent)">Turn on the camera</div>
+      <!-- <div @click="onCameraon" v-show="!camera" style="margin-right: 35px; opacity: 0.5; color: var(--accent)">Turn on the camera</div> -->
       <IconCameraon v-if="camera" @click="onCameraoff" style="stroke: var(--accent);" transform="translate(-15 0) scale(1.75)"/>
       <IconCameraoff v-if="!camera" @click="onCameraon" style="stroke: var(--accent); opacity: 0.5;" transform="translate(-15 0) scale(1.75)"/>
     </div>

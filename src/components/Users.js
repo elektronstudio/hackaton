@@ -1,7 +1,6 @@
 import { ref, computed, watchEffect } from "../deps/vue.js";
-import { socket, createMessage, useUser } from "../deps/live.js";
-
-import { useChannel, useImages, shorten } from "../lib/index.js";
+import { createMessage, useUser } from "../deps/live.js";
+import { socket, useChannel, useImages, shorten } from "../lib/index.js";
 import Draggable from "./Draggable.js";
 import { channel } from "../../config.js";
 

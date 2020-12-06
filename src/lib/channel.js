@@ -5,11 +5,12 @@ import {
 } from "https://elektronstudio.github.io/live/src/deps/vue.js";
 
 import {
-  socket,
   createMessage,
   safeJsonParse,
   useUser,
 } from "https://elektronstudio.github.io/live/src/lib/index.js";
+
+import { socket } from "./index.js";
 
 export const useChannel = (channel) => {
   const users = ref([]);

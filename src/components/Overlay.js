@@ -1,7 +1,9 @@
 import { ref } from "../deps/vue.js";
-import { useUser, events, IconMute, IconUnmute } from "../deps/live.js";
+import { useUser, events } from "../deps/live.js";
 import IconCameraon from "./IconCameraon.js";
 import IconCameraoff from "./IconCameraoff.js";
+import IconMute from "./IconMute.js";
+import IconUnmute from "./IconUnmute.js";
 
 export default {
   components: { IconMute, IconUnmute, IconCameraon, IconCameraoff },
@@ -65,14 +67,14 @@ export default {
       align-items: center;
     ">
     <div style="display: flex; align-items: center; cursor: pointer; ">
-      <IconMute v-if="muted" @click="onUnmute" transform="translate(15 0) scale(1.75)" />
-      <IconUnmute v-if="!muted" @click="onMute" transform="translate(15 0) scale(1.75)" />
-    <div @click="onMute" v-show="muted" style="margin-left: 35px; opacity: 0.5">Turn on the sound</div>
+      <IconMute v-if="muted" @click="onUnmute" style="fill: var(--accent); opacity: 0.5;" transform="translate(15 0) scale(1.75)" />
+      <IconUnmute v-if="!muted" @click="onMute" style="fill: var(--accent);" transform="translate(15 0) scale(1.75)" />
+    <div @click="onMute" v-show="muted" style="margin-left: 35px; opacity: 0.4; color: var(--accent)">Turn on the sound</div>
     </div>
     <div style="display: flex; align-items: center; cursor: pointer; ">
-    <div @click="onCameraon" v-show="!camera" style="margin-right: 35px; opacity: 0.5">Turn on the camera</div>
-      <IconCameraon v-if="camera" @click="onCameraoff" transform="translate(-15 0) scale(1.75)"/>
-      <IconCameraoff v-if="!camera" @click="onCameraon" transform="translate(-15 0) scale(1.75)"/>
+    <div @click="onCameraon" v-show="!camera" style="margin-right: 35px; opacity: 0.5; color: var(--accent)">Turn on the camera</div>
+      <IconCameraon v-if="camera" @click="onCameraoff" style="stroke: var(--accent);" transform="translate(-15 0) scale(1.75)"/>
+      <IconCameraoff v-if="!camera" @click="onCameraon" style="stroke: var(--accent); opacity: 0.5;" transform="translate(-15 0) scale(1.75)"/>
     </div>
   </div>
   `,

@@ -39,3 +39,25 @@ export const rgba = (r, g, b, a = 1) => `rgba(${r},${g},${b},${a})`;
 
 export const hsla = (h, s = 100, l = 50, a = 1) =>
   `hsla(${h},${s}%,${l}%,${a})`;
+
+export const debounce = (fn, time) => {
+  let timeout;
+  return function () {
+    const functionCall = () => fn.apply(this, arguments);
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  };
+};
+
+export const throttle = (fn, delay) => {
+  let timeout = false;
+  return (...rest) => {
+    if (!timeout) {
+      timeout = true;
+      fn.apply(this, rest);
+      setTimeout(() => {
+        timeout = false;
+      }, delay);
+    }
+  };
+};

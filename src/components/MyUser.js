@@ -19,7 +19,7 @@ export default {
     :cx="user.userX"
     :cy="user.userY"
     :r="50"
-    :fill="user.userId === userId ? 'var(--orange)' : 'white'"
+    :fill="user.userId === userId ? 'var(--accent)' : 'white'"
     :opacity="user.image ? 1 : 0.5"
   />
   <image
@@ -46,7 +46,7 @@ export default {
     alignment-baseline="central"
     :x="user.userX"
     :y="user.userY ? user.userY - 75 : -75"
-    :fill="user.userId === userId ? 'var(--orange)' : 'white'"
+    :fill="user.userId === userId ? 'var(--accent)' : 'white'"
     style="pointer-events: none; font-size: 20px; font-family;"
   >{{ user.userName }}</text>
   <circle
@@ -55,7 +55,7 @@ export default {
     :cy="user.userY"
     r="50"
     fill="none"
-    stroke="rgba(255,127,80,1)"
+    stroke="var(--accent)"
     stroke-width="3"
   />
   `,

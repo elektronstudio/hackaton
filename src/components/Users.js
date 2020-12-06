@@ -4,11 +4,12 @@ import { socket, useChannel, useImages, shorten } from "../lib/index.js";
 
 import Draggable from "./Draggable.js";
 import User from "./User.js";
+import MyUser from "./MyUser.js";
 
 import { channel } from "../../config.js";
 
 export default {
-  components: { Draggable, User },
+  components: { Draggable, User, MyUser },
   setup() {
     const x = ref(0);
     const y = ref(0);
@@ -65,7 +66,7 @@ export default {
   },
   template: `
   <User v-for="user in users.filter(user => user.userId !== userId)" :user="user" />
-  <User v-for="user in users.filter(user => user.userId === userId)" :user="user" />
+  <MyUser v-for="user in users.filter(user => user.userId === userId)" :user="user" />
   <Draggable :x="x" :y="y" @drag="onDrag">
     <circle r="70" fill="rgba(0,0,0,0)" />
   </Draggable>

@@ -9,6 +9,6 @@ export const channelSources = channels.map(
 export const audioSource =
   "https://elektron.live/assets/generative-backround-hackaton.mp3";
 
-//export const chatUrl = "wss://ws-fggq5.ondigitalocean.app";
+export const chatUrl = "wss://ws-fggq5.ondigitalocean.app";
 
-export const chatUrl = "ws://localhost:8080";
+//export const chatUrl = "ws://localhost:8080";

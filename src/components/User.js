@@ -8,7 +8,7 @@ export default {
   },
   template: `
   <defs>
-    <clipPath :id="'user' + i">
+    <clipPath :id="'clip' + user.userId">
       <circle :cx="user.userX" :cy="user.userY" :r="50" />
     </clipPath>
     <filter id="blur">
@@ -29,7 +29,7 @@ export default {
     height="100"
     :x="user.userX ? user.userX - 50 : -50"
     :y="user.userY ? user.userY - 50 : -50"
-    :clip-path="'url(#user' + i + ')'"
+    :clip-path="'url(#clip' + user.userId + ')'"
   />
   <!--text
     v-if="user.userId === userId"

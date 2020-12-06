@@ -64,7 +64,7 @@ export default {
     };
   },
   template: `
-  <User v-for="(user, i) in users" :user="user" />
+  <User v-for="user in users" :user="user" />
   <Draggable :x="x" :y="y" @drag="onDrag">
     <circle r="70" fill="rgba(0,0,0,0)" />
   </Draggable>

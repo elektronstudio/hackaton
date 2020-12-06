@@ -1,8 +1,12 @@
 import { ref } from "../deps/vue.js";
-import { useUser, events, IconMute, IconUnmute } from "../deps/live.js";
+import { useUser, events } from "../deps/live.js";
+import IconCameraon from "./IconCameraon.js";
+import IconCameraoff from "./IconCameraoff.js";
+import IconMute from "./IconMute.js";
+import IconUnmute from "./IconUnmute.js";
 
 export default {
-  components: { IconMute, IconUnmute },
+  components: { IconMute, IconUnmute, IconCameraon, IconCameraoff },
   setup() {
     const muted = ref(true);
     const camera = ref(false);
@@ -40,32 +44,38 @@ export default {
     };
   },
   template: `
-  <div
+   <div
     style="
       position: fixed;
-      top: 16px;
+      bottom: 24px;
       right: 16px;
+      left: 16px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-    "
-  >
-  </div>
+    ">
+    <input v-model="userName" style="width: 300px;" />
+  </div>  
   <div
     style="
       position: fixed;
-      bottom: 16px;
+      bottom: 24px;
       right: 16px;
       left: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     ">
-    <IconMute v-if="muted" @click="onUnmute" transform="translate(15 -5) scale(1.75)" />
-    <IconUnmute v-if="!muted" @click="onMute" transform="translate(15 -5) scale(1.75)" />
-    <input v-model="userName" style="width: 300px;" />
-    <button v-if="camera" @click="onCameraoff">Stop camera</button>
-    <button v-if="!camera" @click="onCameraon">Start camera</button>
-  </div>  
+    <div style="display: flex; align-items: center; cursor: pointer; ">
+      <IconMute v-if="muted" @click="onUnmute" style="fill: var(--accent); opacity: 0.5;" transform="translate(15 0) scale(1.75)" />
+      <IconUnmute v-if="!muted" @click="onMute" style="fill: var(--accent);" transform="translate(15 0) scale(1.75)" />
+    <div @click="onMute" v-show="muted" style="margin-left: 35px; opacity: 0.4; color: var(--accent)">Turn on the sound</div>
+    </div>
+    <div style="display: flex; align-items: center; cursor: pointer; ">
+    <div @click="onCameraon" v-show="!camera" style="margin-right: 35px; opacity: 0.5; color: var(--accent)">Turn on the camera</div>
+      <IconCameraon v-if="camera" @click="onCameraoff" style="stroke: var(--accent);" transform="translate(-15 0) scale(1.75)"/>
+      <IconCameraoff v-if="!camera" @click="onCameraon" style="stroke: var(--accent); opacity: 0.5;" transform="translate(-15 0) scale(1.75)"/>
+    </div>
+  </div>
   `,
 };

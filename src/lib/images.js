@@ -6,7 +6,6 @@ import {
 } from "https://elektronstudio.github.io/live/src/deps/vue.js";
 
 import {
-  socket,
   createMessage,
   safeJsonParse,
   uuidv4,
@@ -14,6 +13,8 @@ import {
   fit,
   useUser,
 } from "https://elektronstudio.github.io/live/src/lib/index.js";
+
+import { socket } from "./index.js";
 
 const imageWidth = 100;
 const imageHeight = 100;

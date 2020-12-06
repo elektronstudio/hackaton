@@ -1,7 +1,7 @@
 import { createApp, ref } from "./src/deps/vue.js";
 import { events } from "./src/deps/live.js";
 
-import Background from "./src/components/Background.js";
+import Background from "./src/components/Background2.js";
 import Overlay from "./src/components/Overlay.js";
 import Svg from "./src/components/Svg.js";
 import Users from "./src/components/Users.js";

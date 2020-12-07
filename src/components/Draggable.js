@@ -5,8 +5,8 @@ export default {
   setup(props, { emit }) {
     const draggableEl = ref(0);
 
-    // const x = ref(0);
-    // const y = ref(0);
+    const x = ref(props.x);
+    const y = ref(props.y);
 
     // const update = (e) => {
     //   x.value = draggableEl?.value?.pageX;
@@ -23,39 +23,74 @@ export default {
 
     const { mouseX, mouseY } = inject("mouse");
 
-    const mousePressed = ref(false);
+    const touchStarted = ref(false);
 
-    const onMousepress = () => {
-      mousePressed.value = !mousePressed.value;
+    const offsetX = ref(null);
+    const offsetY = ref(null);
+
+    const onTouchstart = () => {
+      touchStarted.value = true;
+      offsetX.value = mouseX.value - draggableEl.value.offsetLeft;
+      offsetY.value = mouseY.value - draggableEl.value.offsetTop;
+    };
+
+    const onTouchend = () => {
+      console.log("end");
+      touchStarted.value = false;
+      offsetX.value = null;
+      offsetY.value = null;
     };
 
     watch([() => mouseX.value, () => mouseY.value], () => {
-      if (mousePressed.value) {
-        emit("drag", {
-          dragX: mouseX.value - draggableEl.value.offsetLeft,
-          dragY: mouseY.value - draggableEl.value.offsetTop,
-        });
+      if (touchStarted.value) {
+        console.log(offsetX.value);
+        x.value = mouseX.value - offsetX.value;
+        y.value = mouseY.value - offsetY.value;
+
+        // // emit("drag", {
+        //   dragX: mouseX.value - draggableEl.value.offsetLeft,
+        //   dragY: mouseY.value - draggableEl.value.offsetTop,
+        // });
       }
     });
+
+    // const onMousepress = () => {
+    //   mousePressed.value = !mousePressed.value;
+    // };
+
+    /*
+    watch([() => mouseX.value, () => mouseY.value], () => {
+      if (mousePressed.value) {
+        // console.log(draggableEl.value.offsetLeft, mouseX.value);
+        // x.value = mouseX.value - draggableEl.value.offsetLeft;
+        // y.value = mouseY.value - draggableEl.value.offsetTop;
+        // // emit("drag", {
+        //   dragX: mouseX.value - draggableEl.value.offsetLeft,
+        //   dragY: mouseY.value - draggableEl.value.offsetTop,
+        // });
+      }
+    });
+    */
 
     const positionStyle = computed(() => {
       return {
         position: "fixed",
-        left: `${props.x}px`,
-        top: `${props.y}px`,
+        left: `${x.value}px`,
+        top: `${y.value}px`,
       };
     });
 
-    return { draggableEl, onMousepress, positionStyle };
+    return { draggableEl, onTouchstart, onTouchend, positionStyle };
   },
   template: `
   <div
     ref="draggableEl"
     :style="positionStyle"
-    @mousedown="onMousepress"
-    @touchstart="onMousepress"
-    @mouseup="onMousepress"
-    @touchend="onMousepress"
+    @mousedown="onTouchstart"
+    @touchstart="onTouchstart"
+    @mouseup="onTouchend"
+    @touchend="onTouchend"
+    draggable
   >
     <slot />
   </div>

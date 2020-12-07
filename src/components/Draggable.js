@@ -70,7 +70,7 @@ export default {
 
     const positionStyle = computed(() => {
       return {
-        position: "fixed",
+        position: "absolute",
         left: `${x.value}px`,
         top: `${y.value}px`,
       };
@@ -86,8 +86,6 @@ export default {
     @touchstart="onTouchstart"
     @mouseup="onTouchend"
     @touchend="onTouchend"
-    draggable
-    style="background: linear-gradient(#e66465, #9198e5)"
   >
     <slot />
   </div>

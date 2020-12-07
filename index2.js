@@ -33,7 +33,18 @@ const Scene = {
     const { mouseX, mouseY } = useMouse();
     provide("mouse", { mouseX, mouseY });
   },
-  template: `<slot />`,
+  template: `
+  <div
+    style="
+      position: relative;
+      overflow: hidden;
+      border: 4px solid green;
+      width: 100vw;
+      height: 100vh;
+    "
+  >
+    <slot />
+  </div>`,
 };
 
 const App = {
@@ -42,29 +53,37 @@ const App = {
     Scene,
   },
   setup() {
-    const x = ref(0);
-    const y = ref(0);
+    const width = 500;
+    const height = 500;
+    // const offsetX = (width - window.innerWidth) / -2;
+    // const offsetY = (height - window.innerHeight) / -2;
 
-    // const onDrag = ({ dragX, dragY }) => {
-    //   console.log(dragY);
-    //   currentX.value += dragX;
-    //   currentY.value += dragY;
-    // };
+    const offsetX = window.innerWidth / 2;
+    const offsetY = window.innerHeight / 2;
 
-    const onDrag = () => {};
-
-    return { x, y, onDrag };
+    return { width, height, offsetX, offsetY };
   },
   template: `
-  <Scene>
-    <Draggable :x="currentX" :y="currentY" @drag="onDrag">
-      <div style="
-        width: 100px;
-        height: 100px;
-        border: 2px solid red;
+  <Scene style="offset">
+    <Draggable :x="0" :y="0">
+      <div
+        :style="{
+          width: width + 'px',
+          height: height + 'px'
+        }"
+        style="
+          background: url(https://images.all-free-download.com/images/graphiclarge/goa_small_bird_202958.jpg)
         "
       />
     </Draggable>
+    <Draggable x="0" y="0">
+      <div style="
+        width: 100px;
+        height: 100px;
+        background: blue;
+        "
+      />
+    </Draggable></div>
   </Scene>
   `,
 };

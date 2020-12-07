@@ -17,36 +17,25 @@ export default {
       }
     });
 
-    const transform = computed(() => `translate(${props.x},${props.y})`);
-
-    const keyOffset = 3;
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") {
-        emit("drag", { dragX: props.x - keyOffset, dragY: props.y });
-      }
-      if (e.key === "ArrowRight") {
-        emit("drag", { dragX: props.x + keyOffset, dragY: props.y });
-      }
-      if (e.key === "ArrowUp") {
-        emit("drag", { dragX: props.x, dragY: props.y - keyOffset });
-      }
-      if (e.key === "ArrowDown") {
-        emit("drag", { dragX: props.x, dragY: props.y + keyOffset });
-      }
+    const positionStyle = computed(() => {
+      return {
+        position: "fixed",
+        left: `${props.x}px`,
+        top: `${props.y}px`,
+      };
     });
 
-    return { onMousepress, transform };
+    return { onMousepress, positionStyle };
   },
   template: `
-  <g 
-    :transform="transform"
+  <div
+    :style="positionStyle"
     @mousedown="onMousepress"
     @touchstart="onMousepress"
     @mouseup="onMousepress"
     @touchend="onMousepress"
   >
     <slot />
-  </g>
+  </div>
   `,
 };

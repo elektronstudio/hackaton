@@ -1,70 +1,35 @@
-import { createApp, ref } from "./src/deps/vue.js";
-import { events } from "./src/deps/live.js";
+import { createApp } from "./src/deps/vue.js";
 
 import Background from "./src/components/Background.js";
 import Overlay from "./src/components/Overlay.js";
 import Svg from "./src/components/Svg.js";
 import Users from "./src/components/Users.js";
-import Videos from "./src/components/Videos.js";
-
-import { useImages } from "./src/lib/index.js";
-
-import { channel, audioSource } from "./config.js";
-
-const Camera = {
-  setup() {
-    const {
-      onStart,
-      onStop,
-      images2,
-      videoEl,
-      canvasEl,
-      sendImageMessages,
-    } = useImages(channel);
-
-    sendImageMessages();
-
-    events.on("cameraon", onStart);
-    events.on("cameraoff", onStop);
-
-    return { images2, videoEl, canvasEl };
-  },
-  template: `
-    <video ref="videoEl" autoplay playsinline style="border: 1px solid red; position: fixed; top: 0; right: 0; opacity: 0; pointer-events: none;" />
-    <canvas ref="canvasEl" style="display: none" />
-  `,
-};
-
-const Audio = {
-  setup() {
-    const audioRef = ref(null);
-    const muted = ref(true);
-
-    events.on("mute", () => (muted.value = true));
-    events.on("unmute", () => {
-      muted.value = false;
-      audioRef.value.play();
-    });
-
-    return { muted, audioRef, audioSource };
-  },
-  template: `
-  <audio :src="audioSource" autoplay :muted="muted" ref="audioRef" />
-  `,
-};
+import VideoStreams from "./src/components/VideoStreams.js";
+import VideoFiles from "./src/components/VideoFiles.js";
+import AudioFiles from "./src/components/AudioFiles.js";
+import Camera from "./src/components/Camera.js";
 
 const App = {
-  components: { Background, Overlay, Svg, Users, Videos, Camera, Audio },
+  components: {
+    Background,
+    Overlay,
+    Svg,
+    Users,
+    VideoStreams,
+    VideoFiles,
+    AudioFiles,
+    Camera,
+  },
   template: `
-  <Videos />
+  <VideoFiles />
+  <VideoStreams />
   <Svg>
     <Background />
-    <!-- <circle r="110" fill="rgba(0,0,0,0.5)" /> -->
     <Users />
   </Svg>
   <Overlay />
+  <AudioFiles />
   <Camera />
-  <Audio />
   `,
 };
 

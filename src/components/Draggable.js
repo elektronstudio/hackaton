@@ -28,10 +28,22 @@ export default {
     const offsetX = ref(null);
     const offsetY = ref(null);
 
-    const onTouchstart = () => {
+    const onMousedown = () => {
       touchStarted.value = true;
       offsetX.value = mouseX.value - draggableEl.value.offsetLeft;
       offsetY.value = mouseY.value - draggableEl.value.offsetTop;
+    };
+
+    const onMouseup = () => {
+      touchStarted.value = false;
+      offsetX.value = null;
+      offsetY.value = null;
+    };
+
+    const onTouchstart = () => {
+      touchStarted.value = true;
+      offsetX.value = 0;
+      offsetY.value = 0;
     };
 
     const onTouchend = () => {
@@ -59,15 +71,22 @@ export default {
       };
     });
 
-    return { draggableEl, onTouchstart, onTouchend, style };
+    return {
+      draggableEl,
+      onMousedown,
+      onMouseup,
+      onTouchstart,
+      onTouchend,
+      style,
+    };
   },
   template: `
   <div
     ref="draggableEl"
     :style="style"
-    @mousedown.stop="onTouchstart"
+    @mousedown.stop="onMousedown"
     @touchstart.stop="onTouchstart"
-    @mouseup.stop="onTouchend"
+    @mouseup.stop="onMouseup"
     @touchend.stop="onTouchend"
   >
     <slot />

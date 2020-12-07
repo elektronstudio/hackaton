@@ -13,16 +13,18 @@ const useMouse = () => {
   const mouseY = ref(0);
 
   const update = (e) => {
-    mouseX.value = e.pageX;
-    mouseY.value = e.pageY;
+    mouseX.value = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    mouseY.value = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
   };
 
   onMounted(() => {
     window.addEventListener("mousemove", update);
+    window.addEventListener("touchmove", update);
   });
 
   onUnmounted(() => {
     window.removeEventListener("mousemove", update);
+    window.removeEventListener("touchmove", update);
   });
 
   return { mouseX, mouseY };

@@ -45,15 +45,17 @@ const App = {
     const x = ref(0);
     const y = ref(0);
 
-    const onDrag = ({ dragX, dragY }) => {
-      x.value = dragX;
-      y.value = dragY;
-    };
+    // const onDrag = ({ dragX, dragY }) => {
+    //   console.log(dragY);
+    //   currentX.value += dragX;
+    //   currentY.value += dragY;
+    // };
+
     return { x, y, onDrag };
   },
   template: `
   <Scene>
-    <Draggable :x="x" :y="y" @drag="onDrag">
+    <Draggable :x="currentX" :y="currentY" @drag="onDrag">
       <div style="
         width: 100px;
         height: 100px;

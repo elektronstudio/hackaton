@@ -50,24 +50,25 @@ export default {
       }
     });
 
-    const positionStyle = computed(() => {
+    const style = computed(() => {
       return {
         position: "absolute",
         left: `${x.value}px`,
         top: `${y.value}px`,
+        cursor: touchStarted.value ? "grabbing" : "grab",
       };
     });
 
-    return { draggableEl, onTouchstart, onTouchend, positionStyle };
+    return { draggableEl, onTouchstart, onTouchend, style };
   },
   template: `
   <div
     ref="draggableEl"
-    :style="positionStyle"
-    @mousedown="onTouchstart"
-    @touchstart="onTouchstart"
-    @mouseup="onTouchend"
-    @touchend="onTouchend"
+    :style="style"
+    @mousedown.stop="onTouchstart"
+    @touchstart.stop="onTouchstart"
+    @mouseup.stop="onTouchend"
+    @touchend.stop="onTouchend"
   >
     <slot />
   </div>

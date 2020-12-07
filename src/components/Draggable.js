@@ -40,10 +40,10 @@ export default {
       offsetY.value = null;
     };
 
-    const onTouchstart = () => {
+    const onTouchstart = (e) => {
       touchStarted.value = true;
-      offsetX.value = 0;
-      offsetY.value = 0;
+      offsetX.value = e.changedTouches[0].pageX - draggableEl.value.offsetLeft;
+      offsetY.value = e.changedTouches[0].clientY - draggableEl.value.offsetTop;
     };
 
     const onTouchend = () => {
@@ -84,10 +84,10 @@ export default {
   <div
     ref="draggableEl"
     :style="style"
-    @mousedown.stop="onMousedown"
-    @touchstart.stop="onTouchstart"
-    @mouseup.stop="onMouseup"
-    @touchend.stop="onTouchend"
+    @mousedown.stop.prevent="onMousedown"
+    @touchstart.stop.prevent="onTouchstart"
+    @mouseup.stop.prevent="onMouseup"
+    @touchend.stop.prevent="onTouchend"
   >
     <slot />
   </div>

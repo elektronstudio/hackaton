@@ -44,37 +44,53 @@ export default {
     };
   },
   template: `
-   <div
-    style="
-      position: fixed;
-      bottom: 24px;
-      right: 16px;
-      left: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    ">
-  </div>  
   <div
     style="
       position: fixed;
       bottom: 24px;
-      right: 16px;
-      left: 16px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      height: 24px;
+    "
+  >
+    <input v-model="userName" style="min-width: 250px;" />
+  </div>
+
+  <div
+    style="
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      display: flex;
+      height: 24px;
+      cursor: pointer; 
     ">
-    <div style="display: flex; align-items: center; cursor: pointer; ">
-      <IconMute v-if="muted" @click="onUnmute" style="fill: var(--accent); opacity: 0.5;" transform="translate(15 0) scale(1.75)" />
-      <IconUnmute v-if="!muted" @click="onMute" style="fill: var(--accent);" transform="translate(15 0) scale(1.75)" />
-      <!-- <div @click="onMute" v-show="muted" style="margin-left: 35px; opacity: 0.4; color: var(--accent)">Turn on the sound</div> -->
+      <IconMute v-if="muted" @click="onUnmute" style="fill: white;" transform="scale(1.75)" />
+      <IconUnmute v-if="!muted" @click="onMute" style="fill: white;" transform="scale(1.75)" />
+      <div v-if="muted" @click="onUnmute" style="margin-left: 16px; opacity: 0.6; color: white">Turn on the sound</div>
     </div>
-    <input v-model="userName" style="width: 300px;" />
-    <div style="display: flex; align-items: center; cursor: pointer; ">
-      <!-- <div @click="onCameraon" v-show="!camera" style="margin-right: 35px; opacity: 0.5; color: var(--accent)">Turn on the camera</div> -->
-      <IconCameraon v-if="camera" @click="onCameraoff" style="stroke: var(--accent);" transform="translate(-15 0) scale(1.75)"/>
-      <IconCameraoff v-if="!camera" @click="onCameraon" style="stroke: var(--accent); opacity: 0.5;" transform="translate(-15 0) scale(1.75)"/>
+   
+    <div style="
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+      height: 24px;
+      cursor: pointer; 
+    ">
+      <div @click="onCameraon" v-show="!camera" style="margin-right: 24px; opacity: 0.6; color: white">Turn on the camera</div>
+      <IconCameraon v-if="camera" @click="onCameraoff" style="stroke: white;" transform="scale(1.75)"/>
+      <IconCameraoff v-if="!camera" @click="onCameraon" style="stroke: white;" transform="scale(1.75)"/>
     </div>
   </div>
   `,

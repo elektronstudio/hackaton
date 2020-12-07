@@ -1,7 +1,7 @@
 import { createApp } from "./src/deps/vue.js";
 
 import Background from "./src/components/Background.js";
-import Overlay from "./src/components/Overlay.js";
+import Buttons from "./src/components/Buttons.js";
 import Svg from "./src/components/Svg.js";
 import Users from "./src/components/Users.js";
 import VideoStreams from "./src/components/VideoStreams.js";
@@ -12,7 +12,7 @@ import Camera from "./src/components/Camera.js";
 const App = {
   components: {
     Background,
-    Overlay,
+    Buttons,
     Svg,
     Users,
     VideoStreams,
@@ -21,14 +21,14 @@ const App = {
     Camera,
   },
   template: `
+  <AudioFiles />
   <VideoFiles />
   <VideoStreams />
   <Svg>
     <Background />
     <Users />
   </Svg>
-  <Overlay />
-  <AudioFiles />
+  <Buttons />
   <Camera />
   `,
 };

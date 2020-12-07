@@ -35,7 +35,6 @@ export default {
     };
 
     const onTouchend = () => {
-      console.log("end");
       touchStarted.value = false;
       offsetX.value = null;
       offsetY.value = null;
@@ -43,14 +42,11 @@ export default {
 
     watch([() => mouseX.value, () => mouseY.value], () => {
       if (touchStarted.value) {
-        console.log(offsetX.value);
-        x.value = mouseX.value - offsetX.value;
-        y.value = mouseY.value - offsetY.value;
-
-        // // emit("drag", {
-        //   dragX: mouseX.value - draggableEl.value.offsetLeft,
-        //   dragY: mouseY.value - draggableEl.value.offsetTop,
-        // });
+        const dragX = mouseX.value - offsetX.value;
+        const dragY = mouseY.value - offsetY.value;
+        x.value = dragX;
+        y.value = dragY;
+        emit("drag", { dragX, dragY });
       }
     });
 
@@ -91,6 +87,7 @@ export default {
     @mouseup="onTouchend"
     @touchend="onTouchend"
     draggable
+    style="background: linear-gradient(#e66465, #9198e5)"
   >
     <slot />
   </div>

@@ -6,41 +6,19 @@ import Overlay from "./src/components/Overlay.js";
 import Svg from "./src/components/Svg.js";
 import Users from "./src/components/Users.js";
 import Videos from "./src/components/Videos.js";
+import Camera from "./src/components/Camera.js";
 
-import { useImages } from "./src/lib/index.js";
-
-import { channel, audioSource } from "./config.js";
-
-const Camera = {
-  setup() {
-    const {
-      onStart,
-      onStop,
-      images2,
-      videoEl,
-      canvasEl,
-      sendImageMessages,
-    } = useImages(channel);
-
-    sendImageMessages();
-
-    events.on("cameraon", onStart);
-    events.on("cameraoff", onStop);
-
-    return { images2, videoEl, canvasEl };
-  },
-  template: `
-    <video ref="videoEl" autoplay playsinline style="border: 1px solid red; position: fixed; top: 0; right: 0; opacity: 0; pointer-events: none;" />
-    <canvas ref="canvasEl" style="display: none" />
-  `,
-};
+import { audioSource } from "./config.js";
 
 const Audio = {
   setup() {
     const audioRef = ref(null);
     const muted = ref(true);
 
-    events.on("mute", () => (muted.value = true));
+    events.on("mute", () => {
+      // TODO: Should we pause audioRef?
+      muted.value = true;
+    });
     events.on("unmute", () => {
       muted.value = false;
       audioRef.value.play();
@@ -49,7 +27,13 @@ const Audio = {
     return { muted, audioRef, audioSource };
   },
   template: `
-  <audio :src="audioSource" autoplay :muted="muted" ref="audioRef" />
+  <audio
+    ref="audioRef"
+    :muted="muted" 
+    :src="audioSource"
+    autoplay
+    loop
+  />
   `,
 };
 
@@ -59,7 +43,6 @@ const App = {
   <Videos />
   <Svg>
     <Background />
-    <!-- <circle r="110" fill="rgba(0,0,0,0.5)" /> -->
     <Users />
   </Svg>
   <Overlay />

@@ -65,7 +65,7 @@ const App = {
   },
   template: `
   <Scene style="offset">
-    <Draggable :x="0" :y="0">
+    <Draggable :x="0" :y="0"  style="position: relative;">
       <div
         :style="{
           width: width + 'px',
@@ -76,19 +76,25 @@ const App = {
         "
       />
       <div style="
+        top: 0;
+        left: 0;
         width: 50px;
         height: 50px;
         background: blue;
+        position: absolute;
         "
       />
-      <Draggable x="0" y="0">
-        <div style="
-          width: 100px;
-          height: 100px;
-          background: red;
-          "
-        />
-      </Draggable>
+    </Draggable>
+    <Draggable x="0" y="0">
+      <div style="
+        width: 100px;
+        height: 100px;
+        background: red;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        "
+      />
     </Draggable>
   </Scene>
   `,

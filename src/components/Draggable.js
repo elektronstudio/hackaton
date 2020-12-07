@@ -50,24 +50,6 @@ export default {
       }
     });
 
-    // const onMousepress = () => {
-    //   mousePressed.value = !mousePressed.value;
-    // };
-
-    /*
-    watch([() => mouseX.value, () => mouseY.value], () => {
-      if (mousePressed.value) {
-        // console.log(draggableEl.value.offsetLeft, mouseX.value);
-        // x.value = mouseX.value - draggableEl.value.offsetLeft;
-        // y.value = mouseY.value - draggableEl.value.offsetTop;
-        // // emit("drag", {
-        //   dragX: mouseX.value - draggableEl.value.offsetLeft,
-        //   dragY: mouseY.value - draggableEl.value.offsetTop,
-        // });
-      }
-    });
-    */
-
     const positionStyle = computed(() => {
       return {
         position: "absolute",

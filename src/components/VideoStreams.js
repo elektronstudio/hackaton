@@ -1,15 +1,15 @@
-import { channelSources } from "../../config.js";
+import { videoStreamSources } from "../../config.js";
 
-import Video from "./Video.js";
+import VideoStream from "./VideoStream.js";
 
 export default {
-  components: { Video },
+  components: { VideoStream },
   setup() {
-    return { channelSources };
+    return { videoStreamSources };
   },
   template: `
     <div
-      v-for="(src, i) in channelSources" 
+      v-for="(src, i) in videoStreamSources" 
       style="
         position: fixed;
         top: 0;
@@ -23,16 +23,13 @@ export default {
         mix-blend-mode: difference;
       "
     >
-      <Video
+      <VideoStream
         :src="src"
         :style="{
          width: 800 - (i * 300) + 'px',
          clipPath: 'circle(33%)'
         }"
       />
-      <!--div
-        :style="{border: '3px solid red', width: (channelSources.length - i * 10 + 100) + 'px', height: (channelSources.length - i * 10 + 100) + 'px'}"
-      /-->
     </div>
   `,
 };

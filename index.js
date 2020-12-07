@@ -1,53 +1,35 @@
-import { createApp, ref } from "./src/deps/vue.js";
-import { events } from "./src/deps/live.js";
+import { createApp } from "./src/deps/vue.js";
 
 import Background from "./src/components/Background.js";
 import Overlay from "./src/components/Overlay.js";
 import Svg from "./src/components/Svg.js";
 import Users from "./src/components/Users.js";
-import Videos from "./src/components/Videos.js";
+import VideoStreams from "./src/components/VideoStreams.js";
+import VideoFiles from "./src/components/VideoFiles.js";
+import AudioFiles from "./src/components/AudioFiles.js";
 import Camera from "./src/components/Camera.js";
 
-import { audioSource } from "./config.js";
-
-const Audio = {
-  setup() {
-    const audioRef = ref(null);
-    const muted = ref(true);
-
-    events.on("mute", () => {
-      // TODO: Should we pause audioRef?
-      muted.value = true;
-    });
-    events.on("unmute", () => {
-      muted.value = false;
-      audioRef.value.play();
-    });
-
-    return { muted, audioRef, audioSource };
+const App = {
+  components: {
+    Background,
+    Overlay,
+    Svg,
+    Users,
+    VideoStreams,
+    VideoFiles,
+    AudioFiles,
+    Camera,
   },
   template: `
-  <audio
-    ref="audioRef"
-    :muted="muted" 
-    :src="audioSource"
-    autoplay
-    loop
-  />
-  `,
-};
-
-const App = {
-  components: { Background, Overlay, Svg, Users, Videos, Camera, Audio },
-  template: `
-  <Videos />
+  <VideoFiles />
+  <VideoStreams />
   <Svg>
     <Background />
     <Users />
   </Svg>
   <Overlay />
+  <AudioFiles />
   <Camera />
-  <Audio />
   `,
 };
 

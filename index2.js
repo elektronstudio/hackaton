@@ -51,6 +51,8 @@ const App = {
     //   currentY.value += dragY;
     // };
 
+    const onDrag = () => {};
+
     return { x, y, onDrag };
   },
   template: `

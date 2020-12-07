@@ -75,15 +75,21 @@ const App = {
           background: url(https://images.all-free-download.com/images/graphiclarge/goa_small_bird_202958.jpg)
         "
       />
-    </Draggable>
-    <Draggable x="0" y="0">
       <div style="
-        width: 100px;
-        height: 100px;
+        width: 50px;
+        height: 50px;
         background: blue;
         "
       />
-    </Draggable></div>
+      <Draggable x="0" y="0">
+        <div style="
+          width: 100px;
+          height: 100px;
+          background: red;
+          "
+        />
+      </Draggable>
+    </Draggable>
   </Scene>
   `,
 };

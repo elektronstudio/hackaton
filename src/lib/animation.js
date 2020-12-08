@@ -12,13 +12,16 @@ export const useAnimation = (customOptions) => {
     ...customOptions,
   };
   const progress = ref(options.from);
-  anime({
+  const animation = anime({
     targets: progress,
     value: [options.from, options.to],
     duration: options.duration,
     easing: options.easing,
     direction: options.alternate ? "alternate" : null,
     loop: options.loop,
+    autoplay: options.autoplay,
   });
-  return progress;
+  const pause = () => animation.pause();
+  const play = () => animation.play();
+  return { value: progress, play, pause };
 };

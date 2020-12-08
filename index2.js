@@ -64,11 +64,12 @@ const App = {
     const offsetX = (width - window.innerWidth) / -2;
     const offsetY = window.innerHeight / 2;
 
-    return { width, height, offsetX, offsetY };
+    const onMapClick = ({ x, y }) => console.log(x, y);
+    return { onMapClick, width, height, offsetX, offsetY };
   },
   template: `
   <Scene style="offset">
-    <Draggable :x="0" :y="0"  style="border: 2px solid yellow;">
+    <Draggable :x="0" :y="0" @dragClick="onMapClick" style="border: 2px solid yellow;">
       <div
         style="border: 2px solid green"
         :style="{width: width + 'px', height: height + 'px'}"

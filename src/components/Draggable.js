@@ -28,16 +28,27 @@ export default {
     const offsetX = ref(null);
     const offsetY = ref(null);
 
+    const initialX = ref(null);
+    const initialY = ref(null);
+
     const onMousedown = () => {
       touchStarted.value = true;
       offsetX.value = mouseX.value - draggableEl.value.offsetLeft;
       offsetY.value = mouseY.value - draggableEl.value.offsetTop;
+      initialX.value = mouseX.value;
+      initialY.value = mouseY.value;
     };
 
     const onMouseup = () => {
       touchStarted.value = false;
       offsetX.value = null;
       offsetY.value = null;
+      if (
+        initialX.value - mouseX.value === 0 &&
+        initialY.value - mouseY.value === 0
+      ) {
+        emit("dragClick", { x: mouseX.value, y: mouseY.value });
+      }
     };
 
     const onTouchstart = (e) => {

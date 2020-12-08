@@ -81,7 +81,7 @@ const App = {
     const mapClicked = ref(false);
 
     const edgeSize = 30;
-    const edgeMoveSize = 2;
+    const edgeMoveSize = 5;
 
     /*
 

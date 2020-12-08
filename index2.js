@@ -4,7 +4,10 @@ import {
   provide,
   onMounted,
   onUnmounted,
+  inject,
 } from "./src/deps/vue.js";
+
+import { useAnimation } from "./src/lib/index.js";
 
 import Draggable from "./src/components/Draggable.js";
 
@@ -59,6 +62,8 @@ const App = {
     const width = 1500;
     const height = 1500;
 
+    const { mouseX, mouseY } = useMouse();
+
     const offsetX = (width - window.innerWidth) / -2;
     const offsetY = (height - window.innerHeight) / -2;
 
@@ -75,16 +80,39 @@ const App = {
 
     const mapClicked = ref(false);
 
+    const edgeSize = 30;
+    const edgeMoveSize = 2;
+
     const onMyDrag = ({ dragX, dragY }) => {
       mapClicked.value = false;
       myX.value = dragX;
       myY.value = dragY;
+      const left = mouseX.value < edgeSize;
+      const right = mouseX.value > window.innerWidth - edgeSize;
+      const top = mouseY.value < edgeSize;
+      const bottom = mouseY.value > window.innerHeight - edgeSize;
+      if (left) {
+        mapX.value = mapX.value + edgeMoveSize;
+      }
+      if (right) {
+        mapX.value = mapX.value - edgeMoveSize;
+      }
+      if (top) {
+        mapY.value = mapY.value + edgeMoveSize;
+      }
+      if (bottom) {
+        mapY.value = mapY.value - edgeMoveSize;
+      }
     };
 
     const onMapClick = ({ x, y }) => {
       mapClicked.value = true;
       myX.value = x - mapX.value - width / 2;
       myY.value = y - mapY.value - height / 2;
+    };
+
+    const onEdgeStart = (e) => {
+      console.log(e);
     };
 
     const viewBox = `${width / -2} ${height / -2} ${width} ${height}`;
@@ -103,6 +131,7 @@ const App = {
       offsetY,
       viewBox,
       mapClicked,
+      onEdgeStart,
     };
   },
   template: `
@@ -151,6 +180,18 @@ const App = {
       </Draggable>
     </Draggable>
   </Scene>
+  <!--div
+    style="
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 50px;
+      border: 2px solid purple;
+    "
+    @touchstart="onEdgeStart"
+    @touchmove="onEdgeStart"
+  /-->
   `,
 };
 

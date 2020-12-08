@@ -71,10 +71,7 @@ export default {
       touchStarted.value = false;
       offsetX.value = null;
       offsetY.value = null;
-      console.log("touchend");
-      console.log("touchend drag", touchDragStarted.value);
       if (!touchDragStarted.value) {
-        console.log("dragclick");
         emit("dragClick", {
           x: e.changedTouches[0].pageX,
           y: e.changedTouches[0].pageY,
@@ -90,7 +87,6 @@ export default {
         const dragY = mouseY.value - offsetY.value;
         x.value = dragX;
         y.value = dragY;
-        console.log("touchdragstarted", touchDragStarted.value);
         emit("drag", { dragX, dragY });
       }
     });

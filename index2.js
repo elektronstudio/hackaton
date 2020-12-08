@@ -73,12 +73,16 @@ const App = {
     const myX = ref(0);
     const myY = ref(0);
 
+    const mapClicked = ref(false);
+
     const onMyDrag = ({ dragX, dragY }) => {
+      mapClicked.value = false;
       myX.value = dragX;
       myY.value = dragY;
     };
 
     const onMapClick = ({ x, y }) => {
+      mapClicked.value = true;
       myX.value = x - mapX.value - width / 2;
       myY.value = y - mapY.value - height / 2;
     };
@@ -98,11 +102,18 @@ const App = {
       offsetX,
       offsetY,
       viewBox,
+      mapClicked,
     };
   },
   template: `
   <Scene style="offset">
-    <Draggable :x="mapX" :y="mapY" @drag="onMapDrag" @dragClick="onMapClick" style="border: 2px solid yellow;">
+    <Draggable
+      :x="mapX"
+      :y="mapY"
+      @drag="onMapDrag"
+      @dragClick="onMapClick"
+      style="border: 2px solid yellow;"
+    >
       <div
         style="border: 2px solid green"
         :style="{width: width + 'px', height: height + 'px'}"
@@ -121,7 +132,7 @@ const App = {
         transform: translate(-50%, -50%);
         "
       />
-      <Draggable :x="myX" :y="myY" @drag="onMyDrag">
+      <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
         <div
           :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
           style="

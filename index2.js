@@ -62,10 +62,10 @@ const App = {
     // const offsetY = (height - window.innerHeight) / -2;
 
     const offsetX = (width - window.innerWidth) / -2;
-    const offsetY = window.innerHeight / 2;
+    const offsetY = 0;
 
-    const mapX = ref(0);
-    const mapY = ref(0);
+    const mapX = ref(offsetX);
+    const mapY = ref(10);
 
     const onMapDrag = ({ dragX, dragY }) => {
       mapX.value = dragX;
@@ -81,10 +81,15 @@ const App = {
     };
 
     const onMapClick = ({ x, y }) => {
-      myX.value = x - mapX.value;
-      myY.value = y - mapY.value;
+      myX.value = x - mapX.value - width / 2;
+      myY.value = y - mapY.value - height / 2;
     };
+
+    const viewBox = `${width / -2} ${height / -2} ${width} ${height}`;
+
     return {
+      mapX,
+      mapY,
       myX,
       myY,
       onMapDrag,
@@ -94,29 +99,41 @@ const App = {
       height,
       offsetX,
       offsetY,
+      viewBox,
     };
   },
   template: `
   <Scene style="offset">
-    <Draggable :x="0" :y="0" @drag="onMapDrag" @dragClick="onMapClick" style="border: 2px solid yellow;">
+    <Draggable :x="mapX" :y="mapY" @drag="onMapDrag" @dragClick="onMapClick" style="border: 2px solid yellow;">
       <div
         style="border: 2px solid green"
         :style="{width: width + 'px', height: height + 'px'}"
       >
-        <svg :width="width" :height="height">
+        <svg :view-box.camel="viewBox">
           <circle v-for="r in 100" :r="r * 5" cx="0" cy="0" stroke="rgba(255,255,255,0.2)" fill="none" />
         </svg>
       </div>
+      <div
+        :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
+        style="
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        border: 2px solid green;
+        transform: translate(-50%, -50%);
+        "
+      />
       <Draggable :x="myX" :y="myY" @drag="onMyDrag">
-        <div style="
+        <div
+          :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
+          style="
           width: 100px;
           height: 100px;
           background: url(https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg);
           position: absolute;
-          top: 0;
-          left: 0;
           background-size: cover;
           border: 2px solid red;
+          transform: translate(-50%, -50%);
           "
         />
       </Draggable>

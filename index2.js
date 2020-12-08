@@ -41,8 +41,9 @@ const Scene = {
       position: relative;
       overflow: hidden;
       width: 100vw;
-      height: 100vh;
       height: -webkit-fill-available;
+      height: 100vh;
+      border: 2px solid orange;
     "
   >
     <slot />
@@ -55,8 +56,8 @@ const App = {
     Scene,
   },
   setup() {
-    const width = 3000;
-    const height = 3000;
+    const width = 500;
+    const height = 500;
     // const offsetX = (width - window.innerWidth) / -2;
     // const offsetY = (height - window.innerHeight) / -2;
 
@@ -67,24 +68,15 @@ const App = {
   },
   template: `
   <Scene style="offset">
-    <Draggable :x="0" :y="0"  style="position: relative;">
+    <Draggable :x="0" :y="0"  style="border: 2px solid yellow;">
       <div
-        :style="{
-          width: width + 'px',
-          height: height + 'px'
-        }"
-      />
-        
-      <div style="
-        top: 0;
-        left: 0;
-        position: absolute;
-        "
+        style="border: 2px solid green"
+        :style="{width: width + 'px', height: height + 'px'}"
       >
-        <svg width="2000" height="2000">
+        <svg :width="width" :height="height">
           <circle v-for="r in 100" :r="r * 30" cx="300" cy="300" stroke="rgba(255,255,255,0.2)" fill="none" />
         </svg>
-      </svg>
+      </div>
       <Draggable x="250" y="250">
         <div style="
           width: 100px;
@@ -94,6 +86,7 @@ const App = {
           top: 0;
           left: 0;
           background-size: cover;
+          border: 2px solid red;
           "
         />
       </Draggable>

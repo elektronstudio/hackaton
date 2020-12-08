@@ -83,6 +83,24 @@ const App = {
     const edgeSize = 30;
     const edgeMoveSize = 2;
 
+    /*
+
+    watch(
+      () => onEdge.value,
+      () => {
+        if (onEdge.value) {
+          if (onEdgeTimeout.value) {
+            clearTimeout(onEdgeTimeout.value);
+          }
+          onEdgeTimeout.value = setTimeout(() => {
+            onEdge.value = false;
+            console.log("timed out");
+          }, 1000);
+        }
+      }
+    );
+    */
+
     const onMyDrag = ({ dragX, dragY }) => {
       mapClicked.value = false;
       myX.value = dragX;

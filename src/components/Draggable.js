@@ -33,6 +33,7 @@ export default {
     const { mouseX, mouseY } = inject("mouse");
 
     const touchStarted = ref(false);
+    const touchDragStarted = ref(false);
 
     const offsetX = ref(null);
     const offsetY = ref(null);
@@ -70,18 +71,26 @@ export default {
       touchStarted.value = false;
       offsetX.value = null;
       offsetY.value = null;
-      // emit("dragClick", {
-      //   x: e.changedTouches[0].pageX,
-      //   y: e.changedTouches[0].pageY,
-      // });
+      console.log("touchend");
+      console.log("touchend drag", touchDragStarted.value);
+      if (!touchDragStarted.value) {
+        console.log("dragclick");
+        emit("dragClick", {
+          x: e.changedTouches[0].pageX,
+          y: e.changedTouches[0].pageY,
+        });
+      }
+      touchDragStarted.value = false;
     };
 
     watch([() => mouseX.value, () => mouseY.value], () => {
       if (touchStarted.value) {
+        touchDragStarted.value = true;
         const dragX = mouseX.value - offsetX.value;
         const dragY = mouseY.value - offsetY.value;
         x.value = dragX;
         y.value = dragY;
+        console.log("touchdragstarted", touchDragStarted.value);
         emit("drag", { dragX, dragY });
       }
     });

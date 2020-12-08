@@ -63,13 +63,17 @@ export default {
     const onTouchstart = (e) => {
       touchStarted.value = true;
       offsetX.value = e.changedTouches[0].pageX - draggableEl.value.offsetLeft;
-      offsetY.value = e.changedTouches[0].clientY - draggableEl.value.offsetTop;
+      offsetY.value = e.changedTouches[0].pageY - draggableEl.value.offsetTop;
     };
 
-    const onTouchend = () => {
+    const onTouchend = (e) => {
       touchStarted.value = false;
       offsetX.value = null;
       offsetY.value = null;
+      // emit("dragClick", {
+      //   x: e.changedTouches[0].pageX,
+      //   y: e.changedTouches[0].pageY,
+      // });
     };
 
     watch([() => mouseX.value, () => mouseY.value], () => {

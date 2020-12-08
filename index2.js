@@ -56,8 +56,8 @@ const App = {
     Scene,
   },
   setup() {
-    const width = 500;
-    const height = 500;
+    const width = 1500;
+    const height = 1500;
 
     const offsetX = (width - window.innerWidth) / -2;
     const offsetY = (height - window.innerHeight) / -2;
@@ -119,17 +119,18 @@ const App = {
         :style="{width: width + 'px', height: height + 'px'}"
       >
         <svg :view-box.camel="viewBox">
-          <circle v-for="r in 100" :r="r * 5" cx="0" cy="0" stroke="rgba(255,255,255,0.2)" fill="none" />
+          <circle v-for="r in 100" :r="r * 10" cx="0" cy="0" stroke="rgba(255,255,255,0.3)" fill="none" />
         </svg>
       </div>
       <div
         :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
         style="
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
         position: absolute;
-        border: 2px solid green;
+        border: 2px solid red;
         transform: translate(-50%, -50%);
+        border-radius: 10000px;
         "
       />
       <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
@@ -141,8 +142,9 @@ const App = {
           background: url(https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg);
           position: absolute;
           background-size: cover;
-          border: 2px solid red;
+          border: 2px solid white;
           transform: translate(-50%, -50%);
+          border-radius: 10000px;
           "
         />
       </Draggable>

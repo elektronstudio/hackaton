@@ -176,7 +176,18 @@ const App = {
         width: 200px;
         height: 200px;
         position: absolute;
-        border: 2px solid red;
+        border: 2px solid blue;
+        transform: translate(-50%, -50%);
+        border-radius: 10000px;
+        "
+      />
+      <div
+        :style="{ top: (height / 2 - 500) + 'px', left: (width / 2 - 500) + 'px'}"
+        style="
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        border: 2px solid yellow;
         transform: translate(-50%, -50%);
         border-radius: 10000px;
         "

@@ -176,7 +176,7 @@ const App = {
         width: 200px;
         height: 200px;
         position: absolute;
-        border: 2px solid blue;
+        border: 2px solid rebeccapurple;
         transform: translate(-50%, -50%);
         border-radius: 10000px;
         "

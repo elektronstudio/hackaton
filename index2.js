@@ -58,14 +58,12 @@ const App = {
   setup() {
     const width = 500;
     const height = 500;
-    // const offsetX = (width - window.innerWidth) / -2;
-    // const offsetY = (height - window.innerHeight) / -2;
 
     const offsetX = (width - window.innerWidth) / -2;
-    const offsetY = 0;
+    const offsetY = (height - window.innerHeight) / -2;
 
     const mapX = ref(offsetX);
-    const mapY = ref(10);
+    const mapY = ref(offsetY);
 
     const onMapDrag = ({ dragX, dragY }) => {
       mapX.value = dragX;

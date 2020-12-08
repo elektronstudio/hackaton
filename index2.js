@@ -119,6 +119,7 @@ const App = {
         :style="{width: width + 'px', height: height + 'px'}"
       >
         <svg :view-box.camel="viewBox">
+          <line :x2="myX" :y2="myY" stroke="white" />
           <circle v-for="r in 100" :r="r * 10" cx="0" cy="0" stroke="rgba(255,255,255,0.3)" fill="none" />
         </svg>
       </div>

@@ -97,10 +97,11 @@ const App = {
     };
   },
   template: `
-  <Scene style="offset">
-    <Draggable :x="0" :y="0" @drag="onMapDrag" @dragClick="onMapClick" style="border: 2px solid yellow;">
+  <Scene>
+    <div>
+    <Draggable :x="0" :y="0" @drag="onMapDrag" @dragClick="onMapClick" style="border: 2px solid yellow; transform: translate(10px,10px);">
       <div
-        style="border: 2px solid green"
+        style="border: 2px solid green;"
         :style="{width: width + 'px', height: height + 'px'}"
       >
         <svg :width="width" :height="height">
@@ -109,6 +110,7 @@ const App = {
       </div>
       <Draggable :x="myX" :y="myY" @drag="onMyDrag">
         <div style="
+          transform: translate(0%,0%);
           width: 100px;
           height: 100px;
           background: url(https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg);
@@ -120,7 +122,7 @@ const App = {
           "
         />
       </Draggable>
-    </Draggable>
+    </Draggable></div>
   </Scene>
   `,
 };

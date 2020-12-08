@@ -74,7 +74,7 @@ const App = {
         :style="{width: width + 'px', height: height + 'px'}"
       >
         <svg :width="width" :height="height">
-          <circle v-for="r in 100" :r="r * 30" cx="300" cy="300" stroke="rgba(255,255,255,0.2)" fill="none" />
+          <circle v-for="r in 100" :r="r * 5" cx="0" cy="0" stroke="rgba(255,255,255,0.2)" fill="none" />
         </svg>
       </div>
       <Draggable x="250" y="250">

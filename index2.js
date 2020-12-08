@@ -64,12 +64,41 @@ const App = {
     const offsetX = (width - window.innerWidth) / -2;
     const offsetY = window.innerHeight / 2;
 
-    const onMapClick = ({ x, y }) => console.log(x, y);
-    return { onMapClick, width, height, offsetX, offsetY };
+    const mapX = ref(0);
+    const mapY = ref(0);
+
+    const onMapDrag = ({ dragX, dragY }) => {
+      mapX.value = dragX;
+      mapY.value = dragY;
+    };
+
+    const myX = ref(0);
+    const myY = ref(0);
+
+    const onMyDrag = ({ dragX, dragY }) => {
+      myX.value = dragX;
+      myY.value = dragY;
+    };
+
+    const onMapClick = ({ x, y }) => {
+      myX.value = x - mapX.value;
+      myY.value = y - mapY.value;
+    };
+    return {
+      myX,
+      myY,
+      onMapDrag,
+      onMyDrag,
+      onMapClick,
+      width,
+      height,
+      offsetX,
+      offsetY,
+    };
   },
   template: `
   <Scene style="offset">
-    <Draggable :x="0" :y="0" @dragClick="onMapClick" style="border: 2px solid yellow;">
+    <Draggable :x="0" :y="0" @drag="onMapDrag" @dragClick="onMapClick" style="border: 2px solid yellow;">
       <div
         style="border: 2px solid green"
         :style="{width: width + 'px', height: height + 'px'}"
@@ -78,7 +107,7 @@ const App = {
           <circle v-for="r in 100" :r="r * 5" cx="0" cy="0" stroke="rgba(255,255,255,0.2)" fill="none" />
         </svg>
       </div>
-      <Draggable x="250" y="250">
+      <Draggable :x="myX" :y="myY" @drag="onMyDrag">
         <div style="
           width: 100px;
           height: 100px;

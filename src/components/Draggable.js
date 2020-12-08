@@ -5,8 +5,17 @@ export default {
   setup(props, { emit }) {
     const draggableEl = ref(0);
 
-    const x = ref(props.x);
-    const y = ref(props.y);
+    const x = ref(0);
+    const y = ref(0);
+
+    watch(
+      [() => props.x, () => props.y],
+      () => {
+        x.value = props.x;
+        y.value = props.y;
+      },
+      { immediate: true }
+    );
 
     // const update = (e) => {
     //   x.value = draggableEl?.value?.pageX;

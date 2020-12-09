@@ -45,7 +45,7 @@ const User = {
 `,
 };
 
-const App = {
+const DraggableMap = {
   components: {
     Draggable,
     Viewport,
@@ -130,7 +130,6 @@ const App = {
     };
   },
   template: `
-  <Viewport style="offset">
     <Draggable
       :x="mapX"
       :y="mapY"
@@ -156,19 +155,15 @@ const App = {
         />
       </Draggable>
     </Draggable>
+  `,
+};
+
+const App = {
+  components: { DraggableMap, Viewport },
+  template: `
+  <Viewport>
+    <DraggableMap />
   </Viewport>
-  <!--div
-    style="
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 50px;
-      border: 2px solid purple;
-    "
-    @touchstart="onEdgeStart"
-    @touchmove="onEdgeStart"
-  /-->
   `,
 };
 

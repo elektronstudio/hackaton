@@ -1,4 +1,5 @@
 import { ref, inject, watch, computed } from "../deps/vue.js";
+import { useMouse } from "../lib/index.js";
 
 export default {
   props: { x: { default: null }, y: { default: null } },
@@ -17,7 +18,7 @@ export default {
       { immediate: true }
     );
 
-    const { mouseX, mouseY } = inject("mouse");
+    const { mouseX, mouseY } = useMouse();
 
     const dragStarted = ref(false);
     const touchDragStarted = ref(false);

@@ -111,7 +111,7 @@ const User = {
 `,
 };
 
-const Scene = {
+const Viewport = {
   setup() {
     const { mouseX, mouseY } = useMouse();
     provide("mouse", { mouseX, mouseY });
@@ -134,7 +134,7 @@ const Scene = {
 const App = {
   components: {
     Draggable,
-    Scene,
+    Viewport,
     Background,
   },
   setup() {
@@ -216,7 +216,7 @@ const App = {
     };
   },
   template: `
-  <Scene style="offset">
+  <Viewport style="offset">
     <Draggable
       :x="mapX"
       :y="mapY"
@@ -242,7 +242,7 @@ const App = {
         />
       </Draggable>
     </Draggable>
-  </Scene>
+  </Viewport>
   <!--div
     style="
       position: fixed;

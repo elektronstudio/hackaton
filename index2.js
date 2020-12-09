@@ -34,6 +34,50 @@ const useMouse = () => {
   return { mouseX, mouseY };
 };
 
+const Background = {
+  props: { width: { default: 0 }, height: { default: 0 } },
+  setup(props) {
+    const viewBox = `${props.width / -2} ${props.height / -2} ${props.width} ${
+      props.height
+    }`;
+    return { viewBox };
+  },
+  template: `
+  <div
+    style="border: 2px solid green"
+    :style="{width: width + 'px', height: height + 'px'}"
+  >
+    <svg :view-box.camel="viewBox">
+      <slot />
+      <!--line :x2="myX" :y2="myY" stroke="white" /-->
+      <circle v-for="r in 100" :r="r * 10" cx="0" cy="0" stroke="rgba(255,255,255,0.3)" fill="none" />
+    </svg>
+  </div>
+  <div
+    :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
+    style="
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      border: 2px solid rebeccapurple;
+      transform: translate(-50%, -50%);
+      border-radius: 10000px;
+    "
+  />
+  <div
+    :style="{ top: (height / 2 - 500) + 'px', left: (width / 2 - 500) + 'px'}"
+    style="
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      border: 2px solid yellow;
+      transform: translate(-50%, -50%);
+      border-radius: 10000px;
+    "
+  />
+  `,
+};
+
 const Scene = {
   setup() {
     const { mouseX, mouseY } = useMouse();
@@ -58,6 +102,7 @@ const App = {
   components: {
     Draggable,
     Scene,
+    Background,
   },
   setup() {
     const width = 1500;
@@ -121,8 +166,6 @@ const App = {
       myY.value = y - mapY.value - height / 2;
     };
 
-    const viewBox = `${width / -2} ${height / -2} ${width} ${height}`;
-
     return {
       mapX,
       mapY,
@@ -135,7 +178,6 @@ const App = {
       height,
       offsetX,
       offsetY,
-      viewBox,
       mapClicked,
       mouseX,
     };
@@ -149,37 +191,7 @@ const App = {
       @dragClick="onMapClick"
       style="border: 2px solid yellow;"
     >
-      <div
-        style="border: 2px solid green"
-        :style="{width: width + 'px', height: height + 'px'}"
-      >
-        <svg :view-box.camel="viewBox">
-          <line :x2="myX" :y2="myY" stroke="white" />
-          <circle v-for="r in 100" :r="r * 10" cx="0" cy="0" stroke="rgba(255,255,255,0.3)" fill="none" />
-        </svg>
-      </div>
-      <div
-        :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
-        style="
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        border: 2px solid rebeccapurple;
-        transform: translate(-50%, -50%);
-        border-radius: 10000px;
-        "
-      />
-      <div
-        :style="{ top: (height / 2 - 500) + 'px', left: (width / 2 - 500) + 'px'}"
-        style="
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        border: 2px solid yellow;
-        transform: translate(-50%, -50%);
-        border-radius: 10000px;
-        "
-      />
+      <Background :width="width" :height="height" />
       <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
         <div
           :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"

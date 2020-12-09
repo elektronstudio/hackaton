@@ -82,8 +82,8 @@ const App = {
     const mapClicked = ref(false);
 
     const edgeSize = 30;
-    const mapMoveSize = 1;
-    const myMoveSize = 20;
+    const mapMoveSize = 2;
+    const myMoveSize = 4;
 
     const onEdge = ref(false);
     const onEdgeStarted = ref(false);
@@ -123,28 +123,30 @@ const App = {
         mouseY.value !== null && mouseY.value > window.innerHeight - edgeSize;
 
       //if (!onEdgeStarted.value) {
+
       if (left) {
         mapX.value = mapX.value + mapMoveSize;
         myX.value = myX.value - myMoveSize;
-        // onEdge.value = true;
+        onEdge.value = true;
       }
       if (right) {
         mapX.value = mapX.value - mapMoveSize;
         myX.value = myX.value + myMoveSize;
-        // onEdge.value = true;
+        onEdge.value = true;
       }
       if (top) {
         mapY.value = mapY.value + mapMoveSize;
         myY.value = myY.value - myMoveSize;
-        //onEdge.value = true;
+        onEdge.value = true;
+        console.log("top");
       }
       if (bottom) {
         mapY.value = mapY.value - mapMoveSize;
         myY.value = myY.value + myMoveSize;
-        //onEdge.value = true;
+        onEdge.value = true;
       }
+      // }
     };
-    //};
 
     const onMapClick = ({ x, y }) => {
       mapClicked.value = true;

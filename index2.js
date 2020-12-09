@@ -1,3 +1,5 @@
+import Viewport from "./src/components2/Viewport.js";
+
 import {
   createApp,
   ref,
@@ -8,31 +10,9 @@ import {
   watch,
 } from "./src/deps/vue.js";
 
-import { useAnimation } from "./src/lib/index.js";
+import { useMouse } from "./src/lib/index.js";
 
 import Draggable from "./src/components/Draggable.js";
-
-const useMouse = () => {
-  const mouseX = ref(null);
-  const mouseY = ref(null);
-
-  const update = (e) => {
-    mouseX.value = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
-    mouseY.value = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
-  };
-
-  onMounted(() => {
-    window.addEventListener("mousemove", update);
-    window.addEventListener("touchmove", update);
-  });
-
-  onUnmounted(() => {
-    window.removeEventListener("mousemove", update);
-    window.removeEventListener("touchmove", update);
-  });
-
-  return { mouseX, mouseY };
-};
 
 const Background = {
   props: { width: { default: 0 }, height: { default: 0 } },
@@ -109,26 +89,6 @@ const User = {
     />
   </Draggable>
 `,
-};
-
-const Viewport = {
-  setup() {
-    const { mouseX, mouseY } = useMouse();
-    provide("mouse", { mouseX, mouseY });
-  },
-  template: `
-  <div
-    style="
-      position: relative;
-      overflow: hidden;
-      width: 100vw;
-      height: -webkit-fill-available;
-      height: 100vh;
-      border: 2px solid orange;
-    "
-  >
-    <slot />
-  </div>`,
 };
 
 const App = {

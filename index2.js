@@ -78,6 +78,39 @@ const Background = {
   `,
 };
 
+const User = {
+  components: { Draggable },
+  props: {
+    mapClicked: { default: false },
+    width: { default: 0 },
+    height: { default: 0 },
+  },
+  template: `
+  <Draggable
+    :x="myX"
+    :y="myY"
+    @drag="onMyDrag"
+    :style="{
+      transition: mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''
+    }"
+  >
+    <div
+      :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
+      style="
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: url(https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg);
+        background-size: cover;
+        border: 2px solid white;
+        transform: translate(-50%, -50%);
+        border-radius: 10000px;
+      "
+    />
+  </Draggable>
+`,
+};
+
 const Scene = {
   setup() {
     const { mouseX, mouseY } = useMouse();
@@ -192,6 +225,7 @@ const App = {
       style="border: 2px solid yellow;"
     >
       <Background :width="width" :height="height" />
+      <!-- <User :mapClicked="mapClicked" :width="width" :height="height" /> -->
       <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
         <div
           :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"

@@ -17,3 +17,6 @@ export const audioFileSources = [
 export const chatUrl = "wss://ws-fggq5.ondigitalocean.app";
 
 //export const chatUrl = "ws://localhost:8080";
+
+export const mapWidth = 1500;
+export const mapHeight = 1500;

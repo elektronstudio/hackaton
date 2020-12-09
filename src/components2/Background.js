@@ -1,15 +1,16 @@
+import { mapWidth, mapHeight } from "../../config.js";
+
 export default {
-  props: { width: { default: 0 }, height: { default: 0 } },
   setup(props) {
-    const viewBox = `${props.width / -2} ${props.height / -2} ${props.width} ${
-      props.height
-    }`;
-    return { viewBox };
+    const viewBox = `${mapWidth / -2} ${
+      mapHeight / -2
+    } ${mapWidth} ${mapHeight}`;
+    return { mapWidth, mapHeight, viewBox };
   },
   template: `
   <div
     style="border: 2px solid green"
-    :style="{width: width + 'px', height: height + 'px'}"
+    :style="{width: mapWidth + 'px', height: mapHeight + 'px'}"
   >
     <svg :view-box.camel="viewBox">
       <slot />
@@ -18,7 +19,7 @@ export default {
     </svg>
   </div>
   <div
-    :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
+    :style="{ top: mapHeight / 2 + 'px', left: mapWidth / 2 + 'px'}"
     style="
       width: 200px;
       height: 200px;
@@ -29,7 +30,7 @@ export default {
     "
   />
   <div
-    :style="{ top: (height / 2 - 500) + 'px', left: (width / 2 - 500) + 'px'}"
+    :style="{ top: (mapHeight / 2 - 500) + 'px', left: (mapWidth / 2 - 500) + 'px'}"
     style="
       width: 200px;
       height: 200px;

@@ -159,10 +159,12 @@ const DraggableMap = {
 };
 
 const App = {
-  components: { DraggableMap, Viewport },
+  components: { DraggableMap, Viewport, Background },
   template: `
   <Viewport>
-    <DraggableMap />
+    <DraggableMap>
+      <!--Background :width="1500" :height="1500" /-->
+    </DraggableMap>
   </Viewport>
   `,
 };

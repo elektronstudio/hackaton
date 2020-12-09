@@ -71,9 +71,9 @@ const App = {
     const mapX = ref(offsetX);
     const mapY = ref(offsetY);
 
-    const onMapDrag = ({ dragX, dragY }) => {
-      mapX.value = dragX;
-      mapY.value = dragY;
+    const onMapDrag = ({ x, y }) => {
+      mapX.value = x;
+      mapY.value = y;
     };
 
     const myX = ref(0);
@@ -85,35 +85,10 @@ const App = {
     const mapMoveSize = 2;
     const myMoveSize = 4;
 
-    const onEdge = ref(false);
-    const onEdgeStarted = ref(false);
-
-    const delay = 0;
-    const timeoutDelay = 200;
-
-    watch(
-      () => onEdge.value,
-      () => {
-        if (onEdge.value) {
-          onEdgeStarted.value = true;
-          setTimeout(() => {
-            onEdge.value = false;
-            onEdgeStarted.value = false;
-            console.log("timed out");
-          }, timeoutDelay);
-        }
-      }
-    );
-
-    const onClick = () => {
-      console.log("aa");
-      onEdge.value = true;
-    };
-
-    const onMyDrag = ({ dragX, dragY }) => {
+    const onMyDrag = ({ x, y }) => {
       mapClicked.value = false;
-      myX.value = dragX;
-      myY.value = dragY;
+      myX.value = x;
+      myY.value = y;
 
       const left = mouseX.value !== null && mouseX.value < edgeSize;
       const right =
@@ -122,30 +97,22 @@ const App = {
       const bottom =
         mouseY.value !== null && mouseY.value > window.innerHeight - edgeSize;
 
-      //if (!onEdgeStarted.value) {
-
       if (left) {
         mapX.value = mapX.value + mapMoveSize;
         myX.value = myX.value - myMoveSize;
-        onEdge.value = true;
       }
       if (right) {
         mapX.value = mapX.value - mapMoveSize;
         myX.value = myX.value + myMoveSize;
-        onEdge.value = true;
       }
       if (top) {
         mapY.value = mapY.value + mapMoveSize;
         myY.value = myY.value - myMoveSize;
-        onEdge.value = true;
-        console.log("top");
       }
       if (bottom) {
         mapY.value = mapY.value - mapMoveSize;
         myY.value = myY.value + myMoveSize;
-        onEdge.value = true;
       }
-      // }
     };
 
     const onMapClick = ({ x, y }) => {
@@ -154,15 +121,9 @@ const App = {
       myY.value = y - mapY.value - height / 2;
     };
 
-    const onEdgeStart = (e) => {
-      console.log(e);
-    };
-
     const viewBox = `${width / -2} ${height / -2} ${width} ${height}`;
 
     return {
-      onEdge,
-      onEdgeStarted,
       mapX,
       mapY,
       myX,
@@ -176,9 +137,6 @@ const App = {
       offsetY,
       viewBox,
       mapClicked,
-      onEdgeStart,
-      onClick,
-      delay,
       mouseX,
     };
   },
@@ -190,7 +148,6 @@ const App = {
       @drag="onMapDrag"
       @dragClick="onMapClick"
       style="border: 2px solid yellow;"
-      :style="{transition: onEdge ? 'all ' + delay + 'ms linear' : ''}"
     >
       <div
         style="border: 2px solid green"

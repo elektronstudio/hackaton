@@ -1,7 +1,7 @@
 import { ref, inject, watch, computed } from "../deps/vue.js";
 
 export default {
-  props: ["x", "y"],
+  props: { x: { default: null }, y: { default: null } },
   setup(props, { emit }) {
     const draggableEl = ref(0);
 
@@ -17,22 +17,9 @@ export default {
       { immediate: true }
     );
 
-    // const update = (e) => {
-    //   x.value = draggableEl?.value?.pageX;
-    //   y.value = draggableEl?.value?.pageY;
-    // };
-
-    // onMounted(() => {
-    //   window.addEventListener("mousemove", update);
-    // });
-
-    // onUnmounted(() => {
-    //   window.removeEventListener("mousemove", update);
-    // });
-
     const { mouseX, mouseY } = inject("mouse");
 
-    const touchStarted = ref(false);
+    const dragStarted = ref(false);
     const touchDragStarted = ref(false);
 
     const offsetX = ref(null);
@@ -42,7 +29,7 @@ export default {
     const initialY = ref(null);
 
     const onMousedown = () => {
-      touchStarted.value = true;
+      dragStarted.value = true;
       offsetX.value = mouseX.value - draggableEl.value.offsetLeft;
       offsetY.value = mouseY.value - draggableEl.value.offsetTop;
       initialX.value = mouseX.value;
@@ -50,7 +37,7 @@ export default {
     };
 
     const onMouseup = () => {
-      touchStarted.value = false;
+      dragStarted.value = false;
       offsetX.value = null;
       offsetY.value = null;
       if (
@@ -62,13 +49,13 @@ export default {
     };
 
     const onTouchstart = (e) => {
-      touchStarted.value = true;
+      dragStarted.value = true;
       offsetX.value = e.changedTouches[0].pageX - draggableEl.value.offsetLeft;
       offsetY.value = e.changedTouches[0].pageY - draggableEl.value.offsetTop;
     };
 
     const onTouchend = (e) => {
-      touchStarted.value = false;
+      dragStarted.value = false;
       offsetX.value = null;
       offsetY.value = null;
       if (!touchDragStarted.value) {
@@ -81,13 +68,13 @@ export default {
     };
 
     watch([() => mouseX.value, () => mouseY.value], () => {
-      if (touchStarted.value) {
+      if (dragStarted.value) {
         touchDragStarted.value = true;
         const dragX = mouseX.value - offsetX.value;
         const dragY = mouseY.value - offsetY.value;
         x.value = dragX;
         y.value = dragY;
-        emit("drag", { dragX, dragY });
+        emit("drag", { x: dragX, y: dragY });
       }
     });
 
@@ -96,7 +83,7 @@ export default {
         position: "absolute",
         left: `${x.value}px`,
         top: `${y.value}px`,
-        cursor: touchStarted.value ? "grabbing" : "grab",
+        cursor: dragStarted.value ? "grabbing" : "grab",
       };
     });
 

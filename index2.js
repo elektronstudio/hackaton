@@ -81,28 +81,26 @@ const App = {
 
     const mapClicked = ref(false);
 
-    const edgeSize = 50;
-    const mapMoveSize = 50;
-    const myMoveSize = 0;
+    const edgeSize = 30;
+    const mapMoveSize = 1;
+    const myMoveSize = 20;
 
     const onEdge = ref(false);
     const onEdgeStarted = ref(false);
 
-    const delay = 250;
+    const delay = 0;
+    const timeoutDelay = 200;
 
     watch(
       () => onEdge.value,
       () => {
         if (onEdge.value) {
           onEdgeStarted.value = true;
-          // if (onEdgeTimeout.value) {
-          //   clearTimeout(onEdgeTimeout.value);
-          // }
-          /*onEdgeTimeout.value = */ setTimeout(() => {
+          setTimeout(() => {
             onEdge.value = false;
             onEdgeStarted.value = false;
             console.log("timed out");
-          }, delay);
+          }, timeoutDelay);
         }
       }
     );
@@ -124,32 +122,29 @@ const App = {
       const bottom =
         mouseY.value !== null && mouseY.value > window.innerHeight - edgeSize;
 
-      if (!onEdgeStarted.value) {
-        if (left) {
-          mapX.value = mapX.value + mapMoveSize;
-          myX.value = myX.value - myMoveSize;
-          //setTimeout(() => (myX.value = myX.value - myMoveSize), delay);
-          onEdge.value = true;
-        }
-        if (right) {
-          mapX.value = mapX.value - mapMoveSize;
-          myX.value = myX.value + myMoveSize;
-          onEdge.value = true;
-        }
-        if (top) {
-          mapY.value = mapY.value + mapMoveSize;
-          myY.value = myY.value - myMoveSize;
-          console.log("top");
-          onEdge.value = true;
-        }
-        if (bottom) {
-          mapY.value = mapY.value - mapMoveSize;
-          myY.value = myY.value + myMoveSize;
-          console.log("bottom");
-          onEdge.value = true;
-        }
+      //if (!onEdgeStarted.value) {
+      if (left) {
+        mapX.value = mapX.value + mapMoveSize;
+        myX.value = myX.value - myMoveSize;
+        // onEdge.value = true;
+      }
+      if (right) {
+        mapX.value = mapX.value - mapMoveSize;
+        myX.value = myX.value + myMoveSize;
+        // onEdge.value = true;
+      }
+      if (top) {
+        mapY.value = mapY.value + mapMoveSize;
+        myY.value = myY.value - myMoveSize;
+        //onEdge.value = true;
+      }
+      if (bottom) {
+        mapY.value = mapY.value - mapMoveSize;
+        myY.value = myY.value + myMoveSize;
+        //onEdge.value = true;
       }
     };
+    //};
 
     const onMapClick = ({ x, y }) => {
       mapClicked.value = true;
@@ -182,6 +177,7 @@ const App = {
       onEdgeStart,
       onClick,
       delay,
+      mouseX,
     };
   },
   template: `

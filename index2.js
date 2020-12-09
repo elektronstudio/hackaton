@@ -5,6 +5,7 @@ import {
   onMounted,
   onUnmounted,
   inject,
+  watch,
 } from "./src/deps/vue.js";
 
 import { useAnimation } from "./src/lib/index.js";
@@ -12,8 +13,8 @@ import { useAnimation } from "./src/lib/index.js";
 import Draggable from "./src/components/Draggable.js";
 
 const useMouse = () => {
-  const mouseX = ref(0);
-  const mouseY = ref(0);
+  const mouseX = ref(null);
+  const mouseY = ref(null);
 
   const update = (e) => {
     mouseX.value = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
@@ -80,46 +81,73 @@ const App = {
 
     const mapClicked = ref(false);
 
-    const edgeSize = 30;
-    const edgeMoveSize = 5;
+    const edgeSize = 50;
+    const mapMoveSize = 50;
+    const myMoveSize = 0;
 
-    /*
+    const onEdge = ref(false);
+    const onEdgeStarted = ref(false);
+
+    const delay = 250;
 
     watch(
       () => onEdge.value,
       () => {
         if (onEdge.value) {
-          if (onEdgeTimeout.value) {
-            clearTimeout(onEdgeTimeout.value);
-          }
-          onEdgeTimeout.value = setTimeout(() => {
+          onEdgeStarted.value = true;
+          // if (onEdgeTimeout.value) {
+          //   clearTimeout(onEdgeTimeout.value);
+          // }
+          /*onEdgeTimeout.value = */ setTimeout(() => {
             onEdge.value = false;
+            onEdgeStarted.value = false;
             console.log("timed out");
-          }, 1000);
+          }, delay);
         }
       }
     );
-    */
+
+    const onClick = () => {
+      console.log("aa");
+      onEdge.value = true;
+    };
 
     const onMyDrag = ({ dragX, dragY }) => {
       mapClicked.value = false;
       myX.value = dragX;
       myY.value = dragY;
-      const left = mouseX.value < edgeSize;
-      const right = mouseX.value > window.innerWidth - edgeSize;
-      const top = mouseY.value < edgeSize;
-      const bottom = mouseY.value > window.innerHeight - edgeSize;
-      if (left) {
-        mapX.value = mapX.value + edgeMoveSize;
-      }
-      if (right) {
-        mapX.value = mapX.value - edgeMoveSize;
-      }
-      if (top) {
-        mapY.value = mapY.value + edgeMoveSize;
-      }
-      if (bottom) {
-        mapY.value = mapY.value - edgeMoveSize;
+
+      const left = mouseX.value !== null && mouseX.value < edgeSize;
+      const right =
+        mouseX.value !== null && mouseX.value > window.innerWidth - edgeSize;
+      const top = mouseY.value !== null && mouseY.value < edgeSize;
+      const bottom =
+        mouseY.value !== null && mouseY.value > window.innerHeight - edgeSize;
+
+      if (!onEdgeStarted.value) {
+        if (left) {
+          mapX.value = mapX.value + mapMoveSize;
+          myX.value = myX.value - myMoveSize;
+          //setTimeout(() => (myX.value = myX.value - myMoveSize), delay);
+          onEdge.value = true;
+        }
+        if (right) {
+          mapX.value = mapX.value - mapMoveSize;
+          myX.value = myX.value + myMoveSize;
+          onEdge.value = true;
+        }
+        if (top) {
+          mapY.value = mapY.value + mapMoveSize;
+          myY.value = myY.value - myMoveSize;
+          console.log("top");
+          onEdge.value = true;
+        }
+        if (bottom) {
+          mapY.value = mapY.value - mapMoveSize;
+          myY.value = myY.value + myMoveSize;
+          console.log("bottom");
+          onEdge.value = true;
+        }
       }
     };
 
@@ -136,6 +164,8 @@ const App = {
     const viewBox = `${width / -2} ${height / -2} ${width} ${height}`;
 
     return {
+      onEdge,
+      onEdgeStarted,
       mapX,
       mapY,
       myX,
@@ -150,6 +180,8 @@ const App = {
       viewBox,
       mapClicked,
       onEdgeStart,
+      onClick,
+      delay,
     };
   },
   template: `
@@ -160,6 +192,7 @@ const App = {
       @drag="onMapDrag"
       @dragClick="onMapClick"
       style="border: 2px solid yellow;"
+      :style="{transition: onEdge ? 'all ' + delay + 'ms linear' : ''}"
     >
       <div
         style="border: 2px solid green"
@@ -192,7 +225,7 @@ const App = {
         border-radius: 10000px;
         "
       />
-      <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
+      <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
         <div
           :style="{ top: height / 2 + 'px', left: width / 2 + 'px'}"
           style="

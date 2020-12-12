@@ -95,15 +95,12 @@ export default {
       <slot />
       <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
         <Item
-          :style="{ top: mapHeight / 2 + 'px', left: mapWidth / 2 + 'px'}"
           style="
           width: 100px;
           height: 100px;
           background: url(https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg);
-          position: absolute;
           background-size: cover;
           border: 2px solid white;
-          transform: translate(-50%, -50%);
           border-radius: 10000px;
           "
         />

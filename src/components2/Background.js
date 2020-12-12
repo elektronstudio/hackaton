@@ -29,7 +29,7 @@ export default {
       border-radius: 10000px;
     "
   />
-  <div
+  <!-- <div
     :style="{ top: (mapHeight / 2 - 500) + 'px', left: (mapWidth / 2 - 500) + 'px'}"
     style="
       width: 200px;
@@ -39,6 +39,6 @@ export default {
       transform: translate(-50%, -50%);
       border-radius: 10000px;
     "
-  />
+  /> -->
   `,
 };

@@ -1,13 +1,13 @@
 import { ref } from "../deps/vue.js";
 
 import { useMouse } from "../lib/index.js";
-import { Draggable, MapItem } from "./index.js";
+import { Draggable, Item } from "./index.js";
 import { mapWidth, mapHeight } from "../../config.js";
 
 export default {
   components: {
     Draggable,
-    MapItem,
+    Item,
   },
   setup() {
     const { mouseX, mouseY } = useMouse();
@@ -94,7 +94,7 @@ export default {
     >
       <slot />
       <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
-        <MapItem
+        <Item
           style="
           width: 100px;
           height: 100px;

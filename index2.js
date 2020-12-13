@@ -1,22 +1,22 @@
 import { createApp } from "./src/deps/vue.js";
 
-import { Viewport, Background, Map, MapItem } from "./src/components2/index.js";
+import { Viewport, Background, Map, Circle } from "./src/components2/index.js";
 
 const App = {
-  components: { Viewport, Background, Map, MapItem },
+  components: { Viewport, Background, Map, Circle },
   template: `
   <Viewport>
     <Map>
       <Background />
-      <MapItem
+      <Circle
         x="-100"
         y="-100"
-        style="
-          width: 200px;
-          height: 200px;
-          border: 2px solid red;
-          border-radius: 10000px;
-        "
+        style="border-color: blue"
+      />
+      <Circle
+        x="0"
+        y="0"
+        style="border-color: orange"
       />
     </Map>
   </Viewport>

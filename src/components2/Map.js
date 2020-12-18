@@ -92,18 +92,9 @@ export default {
       @dragClick="onMapClick"
       style="border: 2px solid yellow;"
     >
-      <slot />
+      <slot name="background" />
       <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
-        <Item
-          style="
-          width: 100px;
-          height: 100px;
-          background: url(https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg);
-          background-size: cover;
-          border: 2px solid white;
-          border-radius: 10000px;
-          "
-        />
+        <slot name="user" />
       </Draggable>
     </Draggable>
   `,

@@ -107,24 +107,25 @@ const App = {
           />
         </Svg>
         <transition-group name="fade">
-        <Circle
-          v-for="user in users"
-          :key="user.userId"
-          :x="user.userX"
-          :y="user.userY"
-          :style="{backgroundImage: 'url(' + user.image + ')'}"
-          style="
-            background-size: cover;
-            border-color: rgba(255,255,255,0.5);
-            padding: 16px;
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-          "
-        >{{ user.userName }}
-        </Circle>
+          <Circle
+            v-for="user in users"
+            :key="user.userId"
+            :x="user.userX"
+            :y="user.userY"
+            :style="{backgroundImage: 'url(' + user.image + ')'}"
+            style="
+              background-size: cover;
+              border-color: rgba(255,255,255,0.5);
+              padding: 16px;
+              transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            "
+          />
+          <Item>
+          {{ user && userName ? user.userName : '' }}
+          </Item>
         </transition-group>
       </template>
       <template #user>
-      <transition name="fade">
         <Circle
           x="0"
           y="0"
@@ -134,9 +135,8 @@ const App = {
             border-width: 3px;
           "
         >
-          {{ userName }}
+          {{ user && user.userName ? user.userName : '' }}
         </Circle>
-        </transition>
       </template>
     </Map>
   </Viewport>

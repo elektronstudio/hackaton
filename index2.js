@@ -4,9 +4,16 @@ import { Viewport, Svg, Map, Circle } from "./src/components2/index.js";
 
 const App = {
   components: { Viewport, Svg, Map, Circle },
+  setup() {
+    const onUserMove = ({ x, y }) => {
+      console.log(x, y);
+    };
+
+    return { onUserMove };
+  },
   template: `
   <Viewport>
-    <Map>
+    <Map @userMove="onUserMove">
       <template #background>
         <Svg>
           <circle

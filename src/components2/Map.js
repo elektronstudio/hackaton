@@ -1,4 +1,4 @@
-import { ref } from "../deps/vue.js";
+import { ref, watch } from "../deps/vue.js";
 
 import { useMouse } from "../lib/index.js";
 import { Draggable, Item } from "./index.js";
@@ -9,7 +9,15 @@ export default {
     Draggable,
     Item,
   },
-  setup() {
+  props: {
+    userX: {
+      default: null,
+    },
+    userY: {
+      default: null,
+    },
+  },
+  setup(props, { emit }) {
     const { mouseX, mouseY } = useMouse();
 
     const offsetX = (mapWidth - window.innerWidth) / -2;
@@ -23,8 +31,8 @@ export default {
       mapY.value = y;
     };
 
-    const myX = ref(0);
-    const myY = ref(0);
+    const myX = ref(props.userX);
+    const myY = ref(props.userY);
 
     const mapClicked = ref(false);
 
@@ -68,6 +76,14 @@ export default {
       myY.value = y - mapY.value - mapHeight / 2;
     };
 
+    watch(
+      [() => myX.value, () => myY.value],
+      () => {
+        emit("userMove", { x: myX.value, y: myY.value });
+      },
+      { immediate: true }
+    );
+
     return {
       mapX,
       mapY,
@@ -90,10 +106,16 @@ export default {
       :y="mapY"
       @drag="onMapDrag"
       @dragClick="onMapClick"
-      style="border: 2px solid yellow;"
     >
       <slot name="background" />
-      <Draggable :x="myX" :y="myY" @drag="onMyDrag"  :style="{transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''}">
+      <Draggable
+        :x="myX"
+        :y="myY"
+        @drag="onMyDrag"
+        :style="{
+          transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''
+        }"
+      >
         <slot name="user" />
       </Draggable>
     </Draggable>

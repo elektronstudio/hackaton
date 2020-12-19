@@ -1,4 +1,4 @@
-import { createApp, computed } from "./src/deps/vue.js";
+import { createApp, computed, TransitionGroup } from "./src/deps/vue.js";
 import { useLocalstorage, useUser, createMessage } from "./src/deps/live.js";
 import {
   pol2car,
@@ -17,7 +17,7 @@ const src = videoFileSources[0];
 const channel = "hackaton2";
 
 const App = {
-  components,
+  components: { ...components, TransitionGroup },
   setup() {
     const randomPosition = pol2car(random(0, 360), random(100, 200));
     const storedUser = useLocalstorage("elektron_user_data", {
@@ -82,20 +82,24 @@ const App = {
           <circle
             v-for="r in 200"
             :r="r * 25"
-            stroke="rgba(255,255,255,0.3)"
+            stroke="rgba(255,255,255,0.15)"
             fill="none"
           />
         </Svg>
+        <transition-group name="fade">
         <Circle
           v-for="user in users"
+          :key="user.userId"
           :x="user.userX"
           :y="user.userY"
           style="
+            border-color: rgba(255,255,255,0.5);
             padding: 16px;
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
           "
         >{{ Math.floor(user.userX) }}<br />{{ Math.floor(user.userY) }}
         </Circle>
+        </transition-group>
       </template>
       <template #user>
         <Circle

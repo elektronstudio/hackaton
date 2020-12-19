@@ -7,7 +7,6 @@ export default {
       width: 100vw;
       height: -webkit-fill-available;
       height: 100vh;
-      border: 2px solid orange;
     "
   >
     <slot />

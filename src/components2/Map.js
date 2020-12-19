@@ -16,20 +16,18 @@ export default {
     userY: {
       default: null,
     },
-    backgroundX: {
+    mapX: {
       default: null,
     },
-    backgroundY: {
+    mapY: {
       default: null,
     },
   },
   setup(props, { emit }) {
     const { mouseX, mouseY } = useMouse();
 
-    const initialMapX =
-      props.backgroundX || (mapWidth - window.innerWidth) / -2;
-    const initialMapY =
-      props.backgroundY || (mapHeight - window.innerHeight) / -2;
+    const initialMapX = props.mapX || (mapWidth - window.innerWidth) / -2;
+    const initialMapY = props.mapY || (mapHeight - window.innerHeight) / -2;
 
     const mapX = ref(initialMapX);
     const mapY = ref(initialMapY);

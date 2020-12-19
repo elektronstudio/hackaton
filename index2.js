@@ -7,15 +7,10 @@ import { Viewport, Svg, Map, Circle } from "./src/components2/index.js";
 const App = {
   components: { Viewport, Svg, Map, Circle },
   setup() {
-    const userX = useLocalstorage("USER_X", 0);
-    const userY = useLocalstorage("USER_Y", 0);
-    const mapX = useLocalstorage("MAP_X", null);
-    const mapY = useLocalstorage("MAP_Y", null);
-
     const randomPosition = pol2car(random(0, 360), 100);
     const storedUser = useLocalstorage("ELEKTRON_USER", {
-      userX: Math.floor(randomPosition.x),
-      userY: Math.floor(randomPosition.y),
+      userX: randomPosition.x,
+      userY: randomPosition.y,
       mapX: null,
       mapY: null,
     });
@@ -25,17 +20,12 @@ const App = {
     };
 
     const onBackgroundMove = ({ x, y }) => {
-      mapX.value = x;
-      mapY.value = y;
+      storedUser.value = { ...storedUser.value, mapX: x, mapY: y };
     };
 
     return {
-      userX,
-      userY,
       storedUser,
       onUserMove,
-      mapX,
-      mapY,
       onBackgroundMove,
     };
   },

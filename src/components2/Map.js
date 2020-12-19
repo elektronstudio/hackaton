@@ -16,19 +16,28 @@ export default {
     userY: {
       default: null,
     },
+    backgroundX: {
+      default: null,
+    },
+    backgroundY: {
+      default: null,
+    },
   },
   setup(props, { emit }) {
     const { mouseX, mouseY } = useMouse();
 
-    const offsetX = (mapWidth - window.innerWidth) / -2;
-    const offsetY = (mapHeight - window.innerHeight) / -2;
+    const initialMapX =
+      props.backgroundX || (mapWidth - window.innerWidth) / -2;
+    const initialMapY =
+      props.backgroundY || (mapHeight - window.innerHeight) / -2;
 
-    const mapX = ref(offsetX);
-    const mapY = ref(offsetY);
+    const mapX = ref(initialMapX);
+    const mapY = ref(initialMapY);
 
     const onMapDrag = ({ x, y }) => {
       mapX.value = x;
       mapY.value = y;
+      emit("backgroundMove", { x, y });
     };
 
     const myX = ref(props.userX);
@@ -94,8 +103,6 @@ export default {
       onMapClick,
       mapWidth,
       mapHeight,
-      offsetX,
-      offsetY,
       mapClicked,
       mouseX,
     };

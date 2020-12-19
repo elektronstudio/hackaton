@@ -1,19 +1,46 @@
 import { createApp } from "./src/deps/vue.js";
+import { useLocalstorage } from "./src/deps/live.js";
 
 import { Viewport, Svg, Map, Circle } from "./src/components2/index.js";
 
 const App = {
   components: { Viewport, Svg, Map, Circle },
   setup() {
+    const userX = useLocalstorage("USER_X", 10);
+    const userY = useLocalstorage("USER_Y", 10);
+    const backgroundX = useLocalstorage("BACKGROUND_X", -50);
+    const backgroundY = useLocalstorage("BACKGROUND_Y", -50);
+
     const onUserMove = ({ x, y }) => {
+      userX.value = x;
+      userY.value = y;
+    };
+
+    const onBackgroundMove = ({ x, y }) => {
+      backgroundX.value = x;
+      backgroundY.value = y;
       console.log(x, y);
     };
 
-    return { onUserMove };
+    return {
+      userX,
+      userY,
+      onUserMove,
+      backgroundX,
+      backgroundY,
+      onBackgroundMove,
+    };
   },
   template: `
   <Viewport>
-    <Map @userMove="onUserMove">
+    <Map
+      :userX="userX"
+      :userY="userY"
+      :backgroundX="backgroundX"
+      :backgroundY="backgroundY"
+      @userMove="onUserMove"
+      @backgroundMove="onBackgroundMove"
+    >
       <template #background>
         <Svg>
           <circle

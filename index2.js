@@ -134,9 +134,9 @@ const App = {
             border-width: 3px;
           "
         >
-          {{ user && user.userName ? user.userName : '' }}
+          {{ userName }}
         </Circle>
-      </transition>
+        </transition>
       </template>
     </Map>
   </Viewport>

@@ -43,7 +43,7 @@ const App = {
         <Svg>
           <circle
             v-for="r in 100"
-            :r="r * 10"
+            :r="r * 50"
             stroke="rgba(255,255,255,0.3)"
             fill="none"
           />

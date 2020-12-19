@@ -107,9 +107,8 @@ const App = {
           />
         </Svg>
         <transition-group name="fade">
+          <div v-for="user in users" :key="user.userId">
           <Circle
-            v-for="user in users"
-            :key="user.userId"
             :x="user.userX"
             :y="user.userY"
             :style="{backgroundImage: 'url(' + user.image + ')'}"
@@ -120,9 +119,18 @@ const App = {
               transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
             "
           />
-          <Item>
-          {{ user && userName ? user.userName : '' }}
+          <Item
+            :x="user.userX"
+            :y="user.userY + 70"
+            style="
+              width: 1000px;
+              text-align: center;
+              pointer-events: none;
+            "
+          >
+            {{ user && user.userName ? user.userName : '' }}
           </Item>
+          </div>
         </transition-group>
       </template>
       <template #user>
@@ -135,8 +143,17 @@ const App = {
             border-width: 3px;
           "
         >
-          {{ user && user.userName ? user.userName : '' }}
         </Circle>
+        <Item
+          y="70"
+          style="
+            width: 1000px;
+            text-align: center;
+            pointer-events: none;
+          "
+        >
+          {{ user && user.userName ? user.userName : '' }}
+        </Item>
       </template>
     </Map>
   </Viewport>

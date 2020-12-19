@@ -47,49 +47,20 @@ export default {
   <div
     style="
       position: fixed;
-      bottom: 24px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      height: 24px;
-    "
-  >
-    <input v-model="userName" style="min-width: 250px;" />
-  </div>
-
-  <div
-    style="
-      position: fixed;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       bottom: 24px;
       left: 24px;
-      display: flex;
-      justify-content: space-between;
+      right: 24px;
       align-items: center;
-      display: flex;
-      height: 24px;
       cursor: pointer; 
+      gap: 16px;
     ">
       <IconMute v-if="muted" @click="onUnmute" style="fill: white;" transform="scale(1.75)" />
       <IconUnmute v-if="!muted" @click="onMute" style="fill: white;" transform="scale(1.75)" />
-    </div>
-   
-    <div style="
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      display: flex;
-      height: 24px;
-      cursor: pointer; 
-    ">
+      <input v-model="userName" />
       <IconCameraon v-if="camera" @click="onCameraoff" style="stroke: white;" transform="scale(1.75)"/>
       <IconCameraoff v-if="!camera" @click="onCameraon" style="stroke: white;" transform="scale(1.75)"/>
-    </div>
   </div>
   `,
 };

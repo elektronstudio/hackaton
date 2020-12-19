@@ -1,4 +1,4 @@
-export const channel = "hackaton";
+export const channel = "hackaton2";
 
 export const videoStreamSources = [
   channel,

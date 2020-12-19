@@ -7,7 +7,7 @@ export default {
     y: { default: 0 },
   },
   template: `
-   <Item
+  <Item
     :x="x"
     :y="y"
     style="
@@ -16,6 +16,8 @@ export default {
       border: 2px solid white;
       border-radius: 10000px;
     "
-  />
+  >
+    <slot />
+  </Item>
   `,
 };

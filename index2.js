@@ -1,18 +1,26 @@
-import { createApp } from "./src/deps/vue.js";
-import { useLocalstorage } from "./src/deps/live.js";
-import { pol2car, random } from "./src/lib/index.js";
+import { createApp, computed } from "./src/deps/vue.js";
+import { useLocalstorage, useUser, createMessage } from "./src/deps/live.js";
+import {
+  pol2car,
+  random,
+  socket,
+  useChannel,
+  useImages,
+  shorten,
+} from "./src/lib/index.js";
 
 import * as components from "./src/components2/index.js";
 
 import { videoFileSources } from "./config.js";
 
 const src = videoFileSources[0];
+const channel = "hackaton2";
 
 const App = {
   components,
   setup() {
     const randomPosition = pol2car(random(0, 360), random(100, 200));
-    const storedUser = useLocalstorage("ELEKTRON_USER", {
+    const storedUser = useLocalstorage("elektron_user_data", {
       userX: randomPosition.x,
       userY: randomPosition.y,
       mapX: null,
@@ -21,7 +29,22 @@ const App = {
 
     const onUserMove = ({ x, y }) => {
       storedUser.value = { ...storedUser.value, userX: x, userY: y };
+      const outgoingMessage = createMessage({
+        type: "CHANNEL_USER_UPDATE",
+        channel,
+        value: {
+          userX: x,
+          userY: y,
+        },
+      });
+      socket.send(outgoingMessage);
     };
+
+    const { userId } = useUser();
+    const { users: allUsers } = useChannel(channel);
+    const users = computed(() =>
+      allUsers.value.filter((user) => user.userId !== userId.value)
+    );
 
     const onBackgroundMove = ({ x, y }) => {
       storedUser.value = { ...storedUser.value, mapX: x, mapY: y };
@@ -32,6 +55,7 @@ const App = {
       onUserMove,
       onBackgroundMove,
       src,
+      users,
     };
   },
   template: `
@@ -62,6 +86,13 @@ const App = {
             fill="none"
           />
         </Svg>
+        <Circle
+          v-for="user in users"
+          :x="user.userX"
+          :y="user.userY"
+          style="padding: 16px"
+        >{{ Math.floor(user.userX) }}
+        </Circle>
       </template>
       <template #user>
         <Circle

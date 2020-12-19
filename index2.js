@@ -16,8 +16,6 @@ import { videoFileSources } from "./config.js";
 const src = videoFileSources[0];
 const channel = "hackaton2";
 
-console.log(components);
-
 const App = {
   components: { ...components, TransitionGroup },
   setup() {
@@ -42,27 +40,34 @@ const App = {
       socket.send(outgoingMessage);
     };
 
+    const onBackgroundMove = ({ x, y }) => {
+      storedUser.value = { ...storedUser.value, mapX: x, mapY: y };
+    };
+
     const { userId } = useUser();
     const { users: allUsers } = useChannel(channel);
     const { images2 } = useImages(channel);
 
-    const users = computed(() =>
-      allUsers.value
-        .filter((user) => user.userId !== userId.value)
-        .map((user) => {
-          const imageUser = images2.value.find(
-            ({ userId }) => userId === user.userId
-          );
-          if (imageUser) {
-            user.image = imageUser.value;
-          }
-          return user;
-        })
+    const usersWithImages = computed(() =>
+      allUsers.value.map((user) => {
+        const imageUser = images2.value.find(
+          ({ userId }) => userId === user.userId
+        );
+        if (imageUser) {
+          user.image = imageUser.value;
+        }
+        return user;
+      })
     );
 
-    const onBackgroundMove = ({ x, y }) => {
-      storedUser.value = { ...storedUser.value, mapX: x, mapY: y };
-    };
+    const users = computed(() =>
+      usersWithImages.value.filter((user) => user.userId !== userId.value)
+    );
+
+    const user = computed(
+      () =>
+        usersWithImages.value.filter((user) => user.userId === userId.value)[0]
+    );
 
     return {
       storedUser,
@@ -70,6 +75,7 @@ const App = {
       onBackgroundMove,
       src,
       users,
+      user,
     };
   },
   template: `
@@ -113,20 +119,24 @@ const App = {
             padding: 16px;
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
           "
-        >{{ Math.floor(user.userX) }}<br />{{ Math.floor(user.userY) }}
+        >{{ user.userName }}
         </Circle>
         </transition-group>
       </template>
       <template #user>
+      <transition name="fade">
         <Circle
           x="0"
           y="0"
+          :style="{backgroundImage: user && user.image ? 'url(' + user.image + ')' : ''}"
           style="
-            background: url(https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg);
             background-size: cover;
             border-width: 3px;
           "
-        />
+        >
+          {{ user && user.userName ? user.userName : '' }}
+        </Circle>
+      </transition>
       </template>
     </Map>
   </Viewport>

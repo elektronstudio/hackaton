@@ -1,43 +1,51 @@
 import { createApp } from "./src/deps/vue.js";
 import { useLocalstorage } from "./src/deps/live.js";
+import { pol2car, random } from "./src/lib/index.js";
 
 import { Viewport, Svg, Map, Circle } from "./src/components2/index.js";
 
 const App = {
   components: { Viewport, Svg, Map, Circle },
   setup() {
-    const userX = useLocalstorage("USER_X", 10);
-    const userY = useLocalstorage("USER_Y", 10);
-    const backgroundX = useLocalstorage("BACKGROUND_X", -50);
-    const backgroundY = useLocalstorage("BACKGROUND_Y", -50);
+    const userX = useLocalstorage("USER_X", 0);
+    const userY = useLocalstorage("USER_Y", 0);
+    const mapX = useLocalstorage("MAP_X", null);
+    const mapY = useLocalstorage("MAP_Y", null);
+
+    const randomPosition = pol2car(random(0, 360), 100);
+    const storedUser = useLocalstorage("ELEKTRON_USER", {
+      userX: Math.floor(randomPosition.x),
+      userY: Math.floor(randomPosition.y),
+      mapX: null,
+      mapY: null,
+    });
 
     const onUserMove = ({ x, y }) => {
-      userX.value = x;
-      userY.value = y;
+      storedUser.value = { ...storedUser.value, userX: x, userY: y };
     };
 
     const onBackgroundMove = ({ x, y }) => {
-      backgroundX.value = x;
-      backgroundY.value = y;
-      console.log(x, y);
+      mapX.value = x;
+      mapY.value = y;
     };
 
     return {
       userX,
       userY,
+      storedUser,
       onUserMove,
-      backgroundX,
-      backgroundY,
+      mapX,
+      mapY,
       onBackgroundMove,
     };
   },
   template: `
   <Viewport>
     <Map
-      :userX="userX"
-      :userY="userY"
-      :backgroundX="backgroundX"
-      :backgroundY="backgroundY"
+      :userX="storedUser.userX"
+      :userY="storedUser.userY"
+      :mapX="storedUser.mapX"
+      :mapY="storedUser.mapY"
       @userMove="onUserMove"
       @backgroundMove="onBackgroundMove"
     >

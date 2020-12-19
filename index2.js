@@ -74,7 +74,7 @@ const App = {
             :src="src"
             style="
               height: 250px;
-              clipPath: circle(32%)
+              clipPath: circle(33%)
             "
           />
         </Item>
@@ -90,8 +90,11 @@ const App = {
           v-for="user in users"
           :x="user.userX"
           :y="user.userY"
-          style="padding: 16px"
-        >{{ Math.floor(user.userX) }}
+          style="
+            padding: 16px;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+          "
+        >{{ Math.floor(user.userX) }}<br />{{ Math.floor(user.userY) }}
         </Circle>
       </template>
       <template #user>
@@ -103,6 +106,7 @@ const App = {
             background-size: cover;
           "
         />
+      </template>
     </Map>
   </Viewport>
   `,

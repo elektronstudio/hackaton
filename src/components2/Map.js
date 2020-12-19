@@ -75,6 +75,7 @@ export default {
         mapY.value = mapY.value - mapMoveSize;
         myY.value = myY.value + myMoveSize;
       }
+      emit("backgroundMove", { x: mapX.value, y: mapY.value });
     };
 
     const onMapClick = ({ x, y }) => {

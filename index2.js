@@ -16,6 +16,8 @@ import { videoFileSources } from "./config.js";
 const src = videoFileSources[0];
 const channel = "hackaton2";
 
+console.log(components);
+
 const App = {
   components: { ...components, TransitionGroup },
   setup() {
@@ -42,8 +44,20 @@ const App = {
 
     const { userId } = useUser();
     const { users: allUsers } = useChannel(channel);
+    const { images2 } = useImages(channel);
+
     const users = computed(() =>
-      allUsers.value.filter((user) => user.userId !== userId.value)
+      allUsers.value
+        .filter((user) => user.userId !== userId.value)
+        .map((user) => {
+          const imageUser = images2.value.find(
+            ({ userId }) => userId === user.userId
+          );
+          if (imageUser) {
+            user.image = imageUser.value;
+          }
+          return user;
+        })
     );
 
     const onBackgroundMove = ({ x, y }) => {
@@ -92,7 +106,9 @@ const App = {
           :key="user.userId"
           :x="user.userX"
           :y="user.userY"
+          :style="{backgroundImage: 'url(' + user.image + ')'}"
           style="
+            background-size: cover;
             border-color: rgba(255,255,255,0.5);
             padding: 16px;
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
@@ -113,6 +129,8 @@ const App = {
       </template>
     </Map>
   </Viewport>
+  <Buttons />
+  <Camera />
   `,
 };
 

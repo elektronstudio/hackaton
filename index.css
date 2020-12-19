@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap");
 
 :root {
-  --accent: rgba(255, 220, 120);
+  --accent: white;
 }
 * {
   box-sizing: border-box;
@@ -33,7 +33,6 @@ input,
 textarea {
   background: none;
   border: none;
-  border-bottom: 2px solid var(--accent);
   border-radius: 2px;
   outline: none;
   padding: 6px;

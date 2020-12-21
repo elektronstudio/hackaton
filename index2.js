@@ -133,7 +133,7 @@ const App = {
           />
           <Item
             :x="user.userX"
-            :y="user.userY + 70"
+            :y="user.userY + 65"
             style="
               width: 1000px;
               text-align: center;
@@ -157,7 +157,7 @@ const App = {
         >
         </Circle>
         <Item
-          y="70"
+          y="65"
           style="
             width: 1000px;
             text-align: center;

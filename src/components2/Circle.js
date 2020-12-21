@@ -11,8 +11,8 @@ export default {
     :x="x"
     :y="y"
     style="
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border: 2px solid white;
       border-radius: 10000px;
     "

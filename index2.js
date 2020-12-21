@@ -1,4 +1,4 @@
-import { createApp, computed, TransitionGroup } from "./src/deps/vue.js";
+import { createApp, computed } from "./src/deps/vue.js";
 import { useLocalstorage, useUser, createMessage } from "./src/deps/live.js";
 import {
   pol2car,
@@ -11,15 +11,20 @@ import {
 
 import * as components from "./src/components2/index.js";
 
-import { audioFileSources, videoFileSources } from "./config.js";
+import {
+  audioFileSources,
+  videoFileSources,
+  videoStreamSources,
+} from "./config.js";
 
-const audioSrc = audioFileSources[0];
-const videoSrc = videoFileSources[0];
+const audioFileSrc = audioFileSources[0];
+const videoFileSrc = videoFileSources[0];
+const videoStreamSrc = videoStreamSources[0];
 
 const channel = "hackaton2";
 
 const App = {
-  components: { ...components, TransitionGroup },
+  components: { ...components },
   setup() {
     const randomPosition = pol2car(random(0, 360), random(100, 200));
     const storedUser = useLocalstorage("elektron_user_data", {
@@ -75,8 +80,9 @@ const App = {
       storedUser,
       onUserMove,
       onBackgroundMove,
-      videoSrc,
-      audioSrc,
+      videoFileSrc,
+      audioFileSrc,
+      videoStreamSrc,
       users,
       user,
     };
@@ -94,7 +100,16 @@ const App = {
       <template #background>
         <Item>
           <VideoFile
-            :src="videoSrc"
+            :src="videoFileSrc"
+            style="
+              height: 350px;
+              clipPath: circle(33%)
+            "
+          />
+        </Item>
+        <Item>
+          <VideoStream
+            :src="videoStreamSrc"
             style="
               height: 250px;
               clipPath: circle(33%)

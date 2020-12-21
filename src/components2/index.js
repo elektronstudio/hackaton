@@ -7,4 +7,5 @@ export { default as Draggable } from "./Draggable.js";
 export { default as Map } from "./Map.js";
 export { default as Svg } from "./Svg.js";
 export { default as VideoFile } from "./VideoFile.js";
+export { default as VideoStream } from "./VideoStream.js";
 export { default as Viewport } from "./Viewport.js";

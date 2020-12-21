@@ -6,7 +6,6 @@ import {
   socket,
   useChannel,
   useImages,
-  shorten,
 } from "./src/lib/index.js";
 
 import * as components from "./src/components2/index.js";
@@ -117,12 +116,7 @@ const App = {
           />
         </Item>
         <Svg>
-          <circle
-            v-for="r in 200"
-            :r="r * 25"
-            stroke="rgba(255,255,255,0.15)"
-            fill="none"
-          />
+          <BackgroundCircles />
         </Svg>
         <transition-group name="fade">
           <div v-for="user in users" :key="user.userId">
@@ -177,7 +171,7 @@ const App = {
   </Viewport>
   <Buttons />
   <Camera />
-  <AudioFile :src="audioSrc" />
+  <AudioFile :src="audioFileSrc" />
   `,
 };
 

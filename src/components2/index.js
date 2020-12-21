@@ -9,3 +9,5 @@ export { default as Svg } from "./Svg.js";
 export { default as VideoFile } from "./VideoFile.js";
 export { default as VideoStream } from "./VideoStream.js";
 export { default as Viewport } from "./Viewport.js";
+export { default as BackgroundCircles } from "./BackgroundCircles.js";
+export { default as BackgroundColortunnel } from "./BackgroundColortunnel.js";

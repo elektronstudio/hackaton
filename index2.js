@@ -11,9 +11,11 @@ import {
 
 import * as components from "./src/components2/index.js";
 
-import { videoFileSources } from "./config.js";
+import { audioFileSources, videoFileSources } from "./config.js";
 
-const src = videoFileSources[0];
+const audioSrc = audioFileSources[0];
+const videoSrc = videoFileSources[0];
+
 const channel = "hackaton2";
 
 const App = {
@@ -73,7 +75,8 @@ const App = {
       storedUser,
       onUserMove,
       onBackgroundMove,
-      src,
+      videoSrc,
+      audioSrc,
       users,
       user,
     };
@@ -91,7 +94,7 @@ const App = {
       <template #background>
         <Item>
           <VideoFile
-            :src="src"
+            :src="videoSrc"
             style="
               height: 250px;
               clipPath: circle(33%)
@@ -159,6 +162,7 @@ const App = {
   </Viewport>
   <Buttons />
   <Camera />
+  <AudioFile :src="audioSrc" />
   `,
 };
 

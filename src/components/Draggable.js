@@ -1,52 +1,112 @@
 import { ref, inject, watch, computed } from "../deps/vue.js";
+import { useMouse } from "../lib/index.js";
 
 export default {
-  props: ["x", "y"],
+  props: { x: { default: null }, y: { default: null } },
   setup(props, { emit }) {
-    const { mouseX, mouseY } = inject("mouse");
+    const draggableEl = ref(0);
 
-    const mousePressed = ref(false);
+    const x = ref(0);
+    const y = ref(0);
 
-    const onMousepress = () => {
-      mousePressed.value = !mousePressed.value;
+    watch(
+      [() => props.x, () => props.y],
+      () => {
+        x.value = props.x;
+        y.value = props.y;
+      },
+      { immediate: true }
+    );
+
+    const { mouseX, mouseY } = useMouse();
+
+    const dragStarted = ref(false);
+    const touchDragStarted = ref(false);
+
+    const offsetX = ref(null);
+    const offsetY = ref(null);
+
+    const initialX = ref(null);
+    const initialY = ref(null);
+
+    const onMousedown = () => {
+      dragStarted.value = true;
+      offsetX.value = mouseX.value - draggableEl.value.offsetLeft;
+      offsetY.value = mouseY.value - draggableEl.value.offsetTop;
+      initialX.value = mouseX.value;
+      initialY.value = mouseY.value;
+    };
+
+    const onMouseup = () => {
+      dragStarted.value = false;
+      offsetX.value = null;
+      offsetY.value = null;
+      if (
+        initialX.value - mouseX.value === 0 &&
+        initialY.value - mouseY.value === 0
+      ) {
+        emit("dragClick", { x: mouseX.value, y: mouseY.value });
+      }
+    };
+
+    const onTouchstart = (e) => {
+      dragStarted.value = true;
+      offsetX.value = e.changedTouches[0].pageX - draggableEl.value.offsetLeft;
+      offsetY.value = e.changedTouches[0].pageY - draggableEl.value.offsetTop;
+    };
+
+    const onTouchend = (e) => {
+      dragStarted.value = false;
+      offsetX.value = null;
+      offsetY.value = null;
+      if (!touchDragStarted.value) {
+        emit("dragClick", {
+          x: e.changedTouches[0].pageX,
+          y: e.changedTouches[0].pageY,
+        });
+      }
+      touchDragStarted.value = false;
     };
 
     watch([() => mouseX.value, () => mouseY.value], () => {
-      if (mousePressed.value) {
-        emit("drag", { dragX: mouseX.value, dragY: mouseY.value });
+      if (dragStarted.value) {
+        touchDragStarted.value = true;
+        const dragX = mouseX.value - offsetX.value;
+        const dragY = mouseY.value - offsetY.value;
+        x.value = dragX;
+        y.value = dragY;
+        emit("drag", { x: dragX, y: dragY });
       }
     });
 
-    const transform = computed(() => `translate(${props.x},${props.y})`);
-
-    const keyOffset = 3;
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") {
-        emit("drag", { dragX: props.x - keyOffset, dragY: props.y });
-      }
-      if (e.key === "ArrowRight") {
-        emit("drag", { dragX: props.x + keyOffset, dragY: props.y });
-      }
-      if (e.key === "ArrowUp") {
-        emit("drag", { dragX: props.x, dragY: props.y - keyOffset });
-      }
-      if (e.key === "ArrowDown") {
-        emit("drag", { dragX: props.x, dragY: props.y + keyOffset });
-      }
+    const style = computed(() => {
+      return {
+        position: "absolute",
+        left: `${x.value}px`,
+        top: `${y.value}px`,
+        cursor: dragStarted.value ? "grabbing" : "grab",
+      };
     });
 
-    return { onMousepress, transform };
+    return {
+      draggableEl,
+      onMousedown,
+      onMouseup,
+      onTouchstart,
+      onTouchend,
+      style,
+    };
   },
   template: `
-  <g 
-    :transform="transform"
-    @mousedown="onMousepress"
-    @touchstart="onMousepress"
-    @mouseup="onMousepress"
-    @touchend="onMousepress"
+  <div
+    ref="draggableEl"
+    :style="style"
+    @mousedown.stop.prevent="onMousedown"
+    @touchstart.stop.prevent="onTouchstart"
+    @mouseup.stop.prevent="onMouseup"
+    @touchend.stop.prevent="onTouchend"
   >
     <slot />
-  </g>
+  </div>
   `,
 };

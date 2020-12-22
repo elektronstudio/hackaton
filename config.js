@@ -1,4 +1,4 @@
-export const channel = "hackaton2";
+export const channel = "hackaton";
 
 export const videoStreamSources = [channel].map(
   (c) => `https://elektron-live.babahhcdn.com/bb1150-le/${c}/index.m3u8`

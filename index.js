@@ -27,7 +27,7 @@ const videoStreamSrc = videoStreamSources[0];
 const App = {
   components,
   setup() {
-    const randomPosition = pol2car(random(0, 360), random(100, 200));
+    const randomPosition = pol2car(random(0, 360), random(175, 200));
 
     const storedUser = useLocalstorage("elektron_user_data", {
       userX: randomPosition.x,
@@ -118,7 +118,8 @@ const App = {
           />
         </Item>
         <Svg>
-          <BackgroundCircles />
+          <Circles />
+          <Hotspot x="-1000" y="-1000" />
         </Svg>
         <transition-group name="fade">
           <div v-for="user in users" :key="user.userId">
@@ -140,12 +141,14 @@ const App = {
               width: 1000px;
               text-align: center;
               pointer-events: none;
+              color: rgba(255,255,255,0.5);
             "
           >
             {{ user && user.userName ? user.userName : '' }}
           </Item>
           </div>
         </transition-group>
+
       </template>
       <template #user>
         <Circle

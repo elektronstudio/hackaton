@@ -1,4 +1,4 @@
-import { useAnimation, rotate, pol2car, hsla } from "../lib/index.js";
+import { rotate, pol2car, hsla } from "../lib/index.js";
 
 export default {
   setup() {

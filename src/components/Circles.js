@@ -1,4 +1,9 @@
+import { rgba } from "../lib/index.js";
+
 export default {
+  setup() {
+    return { rgba };
+  },
   template: `
   <circle
     v-for="r in 200"

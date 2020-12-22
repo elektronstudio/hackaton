@@ -118,7 +118,8 @@ const App = {
           />
         </Item>
         <Svg>
-          <BackgroundCircles />
+          <Circles />
+          <Hotspot x="-1000" y="-1000" />
         </Svg>
         <transition-group name="fade">
           <div v-for="user in users" :key="user.userId">
@@ -147,6 +148,7 @@ const App = {
           </Item>
           </div>
         </transition-group>
+
       </template>
       <template #user>
         <Circle

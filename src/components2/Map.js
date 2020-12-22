@@ -38,11 +38,11 @@ export default {
     const onMapDrag = ({ x, y }) => {
       mapX.value = x;
       mapY.value = y;
-      emit("backgroundMove", { x, y });
+      emit("mapMove", { x, y });
     };
 
-    const myX = ref(props.userX);
-    const myY = ref(props.userY);
+    const userX = ref(props.userX);
+    const userY = ref(props.userY);
 
     const mapClicked = ref(false);
 
@@ -52,8 +52,8 @@ export default {
 
     const onMyDrag = ({ x, y }) => {
       mapClicked.value = false;
-      myX.value = x;
-      myY.value = y;
+      userX.value = x;
+      userY.value = y;
 
       const left = mouseX.value !== null && mouseX.value < edgeSize;
       const right =
@@ -64,33 +64,33 @@ export default {
 
       if (left) {
         mapX.value = mapX.value + mapMoveSize;
-        myX.value = myX.value - myMoveSize;
+        userX.value = userX.value - myMoveSize;
       }
       if (right) {
         mapX.value = mapX.value - mapMoveSize;
-        myX.value = myX.value + myMoveSize;
+        userX.value = userX.value + myMoveSize;
       }
       if (top) {
         mapY.value = mapY.value + mapMoveSize;
-        myY.value = myY.value - myMoveSize;
+        userY.value = userY.value - myMoveSize;
       }
       if (bottom) {
         mapY.value = mapY.value - mapMoveSize;
-        myY.value = myY.value + myMoveSize;
+        userY.value = userY.value + myMoveSize;
       }
       emit("backgroundMove", { x: mapX.value, y: mapY.value });
     };
 
     const onMapClick = ({ x, y }) => {
       mapClicked.value = true;
-      myX.value = x - mapX.value - mapWidth / 2;
-      myY.value = y - mapY.value - mapHeight / 2;
+      userX.value = x - mapX.value - mapWidth / 2;
+      userY.value = y - mapY.value - mapHeight / 2;
     };
 
     watch(
-      [() => myX.value, () => myY.value],
+      [() => userX.value, () => userY.value],
       () => {
-        emit("userMove", { x: myX.value, y: myY.value });
+        emit("userMove", { x: userX.value, y: userY.value });
       },
       { immediate: true }
     );
@@ -98,8 +98,8 @@ export default {
     return {
       mapX,
       mapY,
-      myX,
-      myY,
+      userX,
+      userY,
       onMapDrag,
       onMyDrag,
       onMapClick,
@@ -119,8 +119,8 @@ export default {
     >
       <slot name="background" />
       <Draggable
-        :x="myX"
-        :y="myY"
+        :x="userX"
+        :y="userY"
         @drag="onMyDrag"
         :style="{
           transition: onEdge || mapClicked ? 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' : ''

@@ -1,5 +1,7 @@
 import { createApp, computed } from "./src/deps/vue.js";
+
 import { useLocalstorage, useUser, createMessage } from "./src/deps/live.js";
+
 import {
   pol2car,
   random,
@@ -78,13 +80,13 @@ const App = {
 
     return {
       storedUser,
+      users,
+      user,
       onUserMove,
       onMapMove,
       videoFileSrc,
       audioFileSrc,
       videoStreamSrc,
-      users,
-      user,
     };
   },
   template: `
@@ -94,7 +96,7 @@ const App = {
       :mapX="storedUser.mapX"
       :mapY="storedUser.mapY"
       @userMove="onUserMove"
-      @onMapMove="onMapMove"
+      @mapMove="onMapMove"
     >
       <template #background>
         <Item>

@@ -4,10 +4,13 @@ import { useMouse } from "../lib/index.js";
 import { Draggable, Item } from "./index.js";
 import { mapWidth, mapHeight } from "../../config.js";
 
+import { Viewport } from "./index.js";
+
 export default {
   components: {
     Draggable,
     Item,
+    Viewport,
   },
   props: {
     userX: {
@@ -107,6 +110,7 @@ export default {
     };
   },
   template: `
+  <Viewport>
     <Draggable
       :x="mapX"
       :y="mapY"
@@ -125,5 +129,6 @@ export default {
         <slot name="user" />
       </Draggable>
     </Draggable>
+  </Viewport>
   `,
 };

@@ -11,21 +11,22 @@ import {
 import * as components from "./src/components2/index.js";
 
 import {
+  channel,
   audioFileSources,
   videoFileSources,
   videoStreamSources,
 } from "./config.js";
 
+// TODO: Simplify
 const audioFileSrc = audioFileSources[0];
 const videoFileSrc = videoFileSources[0];
 const videoStreamSrc = videoStreamSources[0];
 
-const channel = "hackaton2";
-
 const App = {
-  components: { ...components },
+  components,
   setup() {
     const randomPosition = pol2car(random(0, 360), random(100, 200));
+
     const storedUser = useLocalstorage("elektron_user_data", {
       userX: randomPosition.x,
       userY: randomPosition.y,
@@ -46,7 +47,7 @@ const App = {
       socket.send(outgoingMessage);
     };
 
-    const onBackgroundMove = ({ x, y }) => {
+    const onMapMove = ({ x, y }) => {
       storedUser.value = { ...storedUser.value, mapX: x, mapY: y };
     };
 
@@ -78,7 +79,7 @@ const App = {
     return {
       storedUser,
       onUserMove,
-      onBackgroundMove,
+      onMapMove,
       videoFileSrc,
       audioFileSrc,
       videoStreamSrc,
@@ -87,14 +88,13 @@ const App = {
     };
   },
   template: `
-  <Viewport>
     <Map
       :userX="storedUser.userX"
       :userY="storedUser.userY"
       :mapX="storedUser.mapX"
       :mapY="storedUser.mapY"
       @userMove="onUserMove"
-      @backgroundMove="onBackgroundMove"
+      @onMapMove="onMapMove"
     >
       <template #background>
         <Item>
@@ -168,7 +168,6 @@ const App = {
         </Item>
       </template>
     </Map>
-  </Viewport>
   <Buttons />
   <Camera />
   <AudioFile :src="audioFileSrc" />

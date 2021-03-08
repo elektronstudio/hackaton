@@ -1,20 +1,18 @@
 import {
-  ref,
-  onMounted,
-  onUnmounted,
   computed,
-} from "https://elektronstudio.github.io/live/src/deps/vue.js";
-
+  onMounted,
+  ref,
+} from 'https:/elektronstudio.github.io/live/src/deps/vue.js';
 import {
   createMessage,
-  safeJsonParse,
-  uuidv4,
-  useSetInterval,
   fit,
+  safeJsonParse,
+  useSetInterval,
   useUser,
-} from "https://elektronstudio.github.io/live/src/lib/index.js";
+  uuidv4,
+} from 'https:/elektronstudio.github.io/live/src/lib/index.js';
 
-import { socket } from "./index.js";
+import { socket } from './index.js';
 
 const imageWidth = 100;
 const imageHeight = 100;
@@ -109,10 +107,10 @@ export const useImages = (channel) => {
       imgScaled: canvasEl.value.toDataURL("image/jpeg", imageQuality),
     };
 
-    fetch("https://elektron.live/area51/upload.php", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
+    // fetch("https://elektron.live/area51/upload.php", {
+    //   method: "POST",
+    //   body: JSON.stringify(payload),
+    // });
   };
 
   const sendStartMessage = () => {

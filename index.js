@@ -1,23 +1,26 @@
-import { createApp, computed } from "./src/deps/vue.js";
-
-import { useLocalstorage, useUser, createMessage } from "./src/deps/live.js";
-
+import {
+  audioFileSources,
+  channel,
+  videoFileSources,
+  videoStreamSources,
+} from './config.js';
+import * as components from './src/components/index.js';
+import {
+  createMessage,
+  useLocalstorage,
+  useUser,
+} from './src/deps/live.js';
+import {
+  computed,
+  createApp,
+} from './src/deps/vue.js';
 import {
   pol2car,
   random,
   socket,
   useChannel,
   useImages,
-} from "./src/lib/index.js";
-
-import * as components from "./src/components/index.js";
-
-import {
-  channel,
-  audioFileSources,
-  videoFileSources,
-  videoStreamSources,
-} from "./config.js";
+} from './src/lib/index.js';
 
 // TODO: Simplify
 const audioFileSrc = audioFileSources[0];
@@ -108,11 +111,11 @@ const App = {
             "
           />
         </Item>
-        <Item>
+        <Item x="-1000" y="-1000">
           <VideoStream
             :src="videoStreamSrc"
             style="
-              height: 250px;
+              height: 550px;
               clipPath: circle(33%)
             "
           />
